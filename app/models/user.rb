@@ -1,3 +1,4 @@
+# ユーザー情報を管理するモデル
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
