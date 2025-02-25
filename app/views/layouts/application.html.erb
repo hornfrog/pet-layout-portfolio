@@ -12,6 +12,32 @@
 
   <body>
     <header>
+    <nav>
+  <ul class="nav-menu">
+    <% @categories.each do |category| %>
+      <li class="dropdown">
+        <%= link_to category.name, category_path(category) %>
+        <% if category.subcategories.any? %>
+          <ul class="dropdown-menu">
+            <% category.subcategories.each do |sub| %>
+              <li class="dropdown">
+                <%= link_to sub.name, category_path(sub) %>
+                <% if sub.subcategories.any? %>
+                  <ul class="dropdown-menu">
+                    <% sub.subcategories.each do |child| %>
+                      <li><%= link_to child.name, category_path(child) %></li>
+                    <% end %>
+                  </ul>
+                <% end %>
+              </li>
+            <% end %>
+          </ul>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</nav>
+
       <% if user_signed_in? %>
         <p><%= current_user.name %>さん、こんにちは！</p>
         <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>

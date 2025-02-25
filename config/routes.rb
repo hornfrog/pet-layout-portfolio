@@ -4,4 +4,5 @@ Rails.application.routes.draw do
     post "guest_sign_in", to: "users/sessions#guest_sign_in"
   end
   root to: "home#index"
+  resources :categories, only: [:show]
 end
