@@ -1,3 +1,8 @@
 ja:
   notices:
     guest_login: "ゲストユーザーとしてログインしました。"
+    recipe_created: "レシピを投稿しました！"
+    recipe_updated: "レシピを更新しました！"
+    recipe_deleted: "レシピを削除しました！"
+  alerts:
+    no_permission: "権限がありません"

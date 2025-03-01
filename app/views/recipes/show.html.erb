@@ -1,0 +1,15 @@
+<h1><%= @recipe.title %></h1>
+
+<p><strong>カテゴリ:</strong> <%= @recipe.category_hierarchy.map(&:name).join(">") %>
+
+<% if @recipe.image.attached? %>
+  <p><strong>画像:</strong></p>
+  <%= image_tag @recipe.image, size: "400x400" %>
+<% end %>
+
+<p><strong>説明:</strong> <%= @recipe.description %></p>
+
+
+<%= link_to "編集", edit_recipe_path(@recipe) %> |
+<%= link_to "削除", recipe_path(@recipe), method: :delete, data: { confirm: "本当に削除しますか？" } %> |
+<%= link_to "戻る", recipes_path %>

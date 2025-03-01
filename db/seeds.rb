@@ -6,10 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 # 親カテゴリ
-reptiles      = Category.find_or_create_by(name: "爬虫類")
-amphibians    = Category.find_or_create_by(name: "両生類")
-fish          = Category.find_or_create_by(name: "熱帯魚")
-small_animals = Category.find_or_create_by(name: "小動物")
+reptiles      = Category.find_or_create_by(name: "爬虫類", parent: nil)
+amphibians    = Category.find_or_create_by(name: "両生類", parent: nil)
+fish          = Category.find_or_create_by(name: "熱帯魚", parent: nil)
+small_animals = Category.find_or_create_by(name: "小動物", parent: nil)
 
 # 子カテゴリ
 {
