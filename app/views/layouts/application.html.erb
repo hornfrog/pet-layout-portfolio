@@ -46,6 +46,23 @@
         <%= link_to "新規登録", new_user_registration_path %>
         <%= button_to "ゲストログイン", guest_sign_in_path, method: :post, class: "btn btn-secondary" %>
       <% end %>
+
+      <% unless current_page?(root_path) %>
+  <nav class="breadcrumb">
+    <%= link_to "Home", root_path %> >
+    <% if @recipe %>
+      <% @recipe.category_hierarchy.each do |category| %>
+        <%= link_to category.name, category_path(category) %>
+        <% unless category == @recipe.category %> > <% end %>
+      <% end %>
+    <% elsif @category %>
+      <% @category.self_and_ancestors.each do |category| %>
+        <%= link_to category.name, category_path(category) %>
+        <% unless category == @category %> > <% end %>
+      <% end %>
+    <% end %>
+  </nav>
+<% end %>
     </header>
     <%= yield %>
   </body>

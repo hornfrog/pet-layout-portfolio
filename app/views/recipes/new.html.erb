@@ -1,0 +1,43 @@
+<h1>レシピを投稿する</h1>
+
+<%= form_with model: @recipe, local: true do |f| %>
+  
+  <div>
+  <%= f.label :parent_category, "親カテゴリ", for: "parent_category" %>
+  <%= f.collection_select :category_id, @categories.where(parent_id: nil), :id, :name, { prompt: "選択してください" }, { id: "parent_category" } %>
+</div>
+
+<!-- 子カテゴリ -->
+<div>
+  <%= f.label :child_category, "子カテゴリ", for: "child_category" %>
+  <%= f.select :child_category_id, [], { prompt: "選択してください" }, { id: "child_category" } %>
+</div>
+
+<!-- 孫カテゴリ -->
+<div>
+  <%= f.label :grandchild_category, "孫カテゴリ", for: "grandchild_category" %>
+  <%= f.select :grandchild_category_id, [], { prompt: "選択してください" }, { id: "grandchild_category" } %>
+</div>
+  
+
+  <div>
+    <%= f.label :title, "タイトル" %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div>
+    <%= f.label :description, "説明" %>
+    <%= f.text_area :description %>
+  </div>
+
+  <div>
+    <%= f.label :image, "画像" %>
+    <%= f.file_field :image %>
+  </div>
+
+  <div>
+    <%= f.submit "投稿する" %>
+  </div>
+<% end %>
+
+<%= link_to "戻る", recipes_path %>
