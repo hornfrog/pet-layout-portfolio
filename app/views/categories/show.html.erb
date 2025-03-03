@@ -1,14 +1,19 @@
 <h1><%= @category.name %> のレシピ一覧</h1>
 
 <% if @recipes.any? %>
-  <ul>
+  <div class="recipe-list">
     <% @recipes.each do |recipe| %>
-      <li>
-        <%= link_to recipe.title, recipe_path(recipe) %>
-        （投稿者: <%= recipe.user.name %>）
-      </li>
+      <div class="recipe-card">
+        <%= link_to recipe_path(recipe) do %>
+          <% if recipe.image.attached? %>
+            <%= image_tag url_for(recipe.image), alt: recipe.title, class: "recipe-image" %>
+          <% end %>
+        <% end %>
+        <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
+        <p>投稿者: <%= recipe.user.name %></p>
+      </div>
     <% end %>
-  </ul>
+  </div>
 <% else %>
   <p>このカテゴリにはまだレシピがありません。</p>
 <% end %>
