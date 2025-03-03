@@ -1,0 +1,9 @@
+<% @recipes.each do |recipe| %>
+  <div class="recipe-card">
+    <%= link_to recipe_path(recipe) do %>
+       <%= image_tag url_for(recipe.image), alt: recipe.title, class: "recipe-image" %>
+    <% end %>
+    <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
+    <p><%= recipe.description %></p>
+  </div>
+<% end %>
