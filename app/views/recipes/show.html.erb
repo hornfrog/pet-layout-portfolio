@@ -3,13 +3,15 @@
 <p><strong>カテゴリ:</strong> <%= @recipe.category_hierarchy.map(&:name).join(">") %>
 
 <% if @recipe.image.attached? %>
-  <p><strong>画像:</strong></p>
-  <%= image_tag @recipe.image, size: "400x400" %>
+  <p><strong><%= @recipe.user.name %></strong></p>
+  <%= image_tag url_for(@recipe.image), width: "300", height: "300" %>
 <% end %>
 
 <p><strong>説明:</strong> <%= @recipe.description %></p>
 
-
+<% if @recipe.user.id == current_user.id %>
 <%= link_to "編集", edit_recipe_path(@recipe) %> |
 <%= link_to "削除", recipe_path(@recipe), method: :delete, data: { confirm: "本当に削除しますか？" } %> |
+<% end %>
+
 <%= link_to "戻る", recipes_path %>

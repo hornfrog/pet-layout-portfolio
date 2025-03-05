@@ -4,24 +4,23 @@
 // that code so it'll be compiled.
 
 import Rails from "@rails/ujs"
-import Turbolinks from "turbolinks"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
-import "../category_select";
+import "./category_select.js";
 
 Rails.start()
-Turbolinks.start()
 ActiveStorage.start()
 
 document.addEventListener("DOMContentLoaded", function() {
-    document.querySelectorAll(".dropdown > a").forEach(function(element) {
-      element.addEventListener("click", function(event) {
-        event.preventDefault();
-        let submenu = this.nextElementSibling;
-        if (submenu) {
-          submenu.classList.toggle("active");
-        }
-      });
+  document.querySelectorAll(".dropdown > a").forEach(function(element) {
+    element.addEventListener("click", function(event) {
+      let submenu = this.nextElementSibling;
+      if (submenu) {
+        submenu.classList.toggle("active");
+        event.stopPropagation();
+      }
     });
   });
+});
+
   

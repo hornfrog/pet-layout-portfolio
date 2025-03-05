@@ -1,2 +1,53 @@
-<h1>Recipes#edit</h1>
-<p>Find me in app/views/recipes/edit.html.erb</p>
+<h1>レシピを編集</h1>
+
+<%= form_with model: @recipe, local: true do |f| %>
+
+  <!-- 親カテゴリ -->
+  <div>
+  <%= f.label :category_id, "親カテゴリ" %>
+  <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "選択してください" }, { id: "parent_category", data: { selected: @recipe.category_id } } %>
+</div>
+
+<div>
+  <%= f.label :child_category_id, "子カテゴリ" %>
+  <%= f.select :child_category_id, [], { prompt: "選択してください" }, { id: "child_category", data: { selected: @recipe.child_category_id } } %>
+</div>
+
+<div>
+  <%= f.label :grandchild_category_id, "孫カテゴリ" %>
+  <%= f.select :grandchild_category_id, [], { prompt: "選択してください" }, { id: "grandchild_category", data: { selected: @recipe.grandchild_category_id } } %>
+</div>
+
+
+  <div>
+    <%= f.label :title, "タイトル" %>
+    <%= f.text_field :title, value: @recipe.title %>
+  </div>
+
+  <div>
+    <%= f.label :description, "説明" %>
+    <%= f.text_area :description, value: @recipe.description %>
+  </div>
+
+  <div>
+    <%= f.label :image, "画像" %>
+    <% if @recipe.image.attached? %>
+      <div>
+      <%= image_tag url_for(@recipe.image), width: "300", height: "300" %>
+
+      </div>
+      <div>
+        <%= check_box_tag "remove_image" %>
+        <%= label_tag "remove_image", "画像を削除する" %>
+      </div>
+    <% end %>
+    <%= f.file_field :image %>
+  </div>
+
+  <div>
+    <%= f.submit "更新する" %>
+  </div>
+
+<% end %>
+
+<%= link_to "戻る", recipes_path %>
