@@ -40,6 +40,8 @@ class RecipesController < ApplicationController
   end
 
   def update
+    @recipe.image.purge if params[:remove_image] == "1"
+
     if @recipe.update(recipe_params)
       redirect_to @recipe, notice: I18n.t('notices.recipe_updated')
     else
