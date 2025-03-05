@@ -32,7 +32,11 @@
 
   <div>
     <%= f.label :image, "画像" %>
-    <%= f.file_field :image %>
+    <div id="image-preview">
+      <img id="preview-image" src="<%= asset_path('no-image.png') %>" alt="プレビュー画像" style="width: 300px; height: 300px;">
+    </div>
+
+    <%= f.file_field :image, id: "image-input" %>
   </div>
 
   <div>
