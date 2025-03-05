@@ -1,17 +1,18 @@
 <h1><%= @recipe.title %></h1>
-
-<p><strong>カテゴリ:</strong> <%= @recipe.category_hierarchy.map(&:name).join(">") %>
+<p><strong><%= @recipe.user.name %></strong></p>
+<p><strong>カテゴリ:</strong> <%= @recipe.category_hierarchy.map(&:name).join(">") %></p>
 
 <% if @recipe.image.attached? %>
-  <p><strong><%= @recipe.user.name %></strong></p>
   <%= image_tag url_for(@recipe.image), width: "300", height: "300" %>
+<% else %>
+  <%= image_tag asset_path('no-image.png'), width: "300", height: "300" %>
 <% end %>
 
 <p><strong>説明:</strong> <%= @recipe.description %></p>
 
 <% if @recipe.user.id == current_user.id %>
-<%= link_to "編集", edit_recipe_path(@recipe) %> |
-<%= link_to "削除", recipe_path(@recipe), method: :delete, data: { confirm: "本当に削除しますか？" } %> |
+  <%= link_to "編集", edit_recipe_path(@recipe) %> |
+  <%= link_to "削除", recipe_path(@recipe), method: :delete, data: { confirm: "本当に削除しますか？" } %> |
 <% end %>
 
 <%= link_to "戻る", recipes_path %>

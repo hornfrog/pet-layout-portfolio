@@ -31,18 +31,22 @@
 
   <div>
     <%= f.label :image, "画像" %>
-    <% if @recipe.image.attached? %>
-      <div>
-      <%= image_tag url_for(@recipe.image), width: "300", height: "300" %>
+    <div id="image-preview">
+      <% if @recipe.image.attached? %>
+        <%= image_tag url_for(@recipe.image), id: "preview-image", width: "300", height: "300" %>
+      <% else %>
+        <img id="preview-image" src="<%= asset_path('no-image.png') %>" alt="プレビュー画像" style="width: 300px; height: 300px;">
+      <% end %>
+    </div>
 
-      </div>
-      <div>
-        <%= check_box_tag "remove_image" %>
-        <%= label_tag "remove_image", "画像を削除する" %>
-      </div>
-    <% end %>
-    <%= f.file_field :image %>
+    <div>
+      <%= check_box_tag "remove_image" %>
+      <%= label_tag "remove_image", "画像を削除する" %>
+    </div>
+
+    <%= f.file_field :image, id: "image-input" %>
   </div>
+
 
   <div>
     <%= f.submit "更新する" %>
