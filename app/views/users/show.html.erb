@@ -1,0 +1,15 @@
+<h2>プロフィール</h2>
+
+<p>名前: <%= @user.name %></p>
+<p>自己紹介: <%= @user.profile.presence || "まだ自己紹介がありません。" %></p>
+
+<% if @user.avatar.attached? %>
+  <%= image_tag @user.avatar, alt: "プロフィール画像", class: "profile-avatar" %>
+<% else %>
+  <%= image_tag "no-image.png", alt: "デフォルトプロフィール画像", class: "profile-avatar" %>
+<% end %>
+
+<% if @user == current_user %>
+  <%= link_to "プロフィールを編集", edit_user_path(@user) %>
+<% end %>
+
