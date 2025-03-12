@@ -7,4 +7,8 @@ class User < ApplicationRecord
   has_many :recipes, dependent: :destroy
   has_one_attached :avatar
   attr_accessor :remove_avatar
+
+  def guest?
+    email == "guest@example.com"
+  end
 end
