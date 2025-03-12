@@ -38,14 +38,18 @@
   </ul>
 </nav>
 
-      <% if user_signed_in? %>
-        <p><%= current_user.name %>さん、こんにちは！</p>
-        <%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
-      <% else %>
-        <%= link_to "ログイン", new_user_session_path %> |
-        <%= link_to "新規登録", new_user_registration_path %>
-        <%= button_to "ゲストログイン", guest_sign_in_path, method: :post, class: "btn btn-secondary" %>
-      <% end %>
+<% if user_signed_in? %>
+<p><%= current_user.name %> さん、こんにちは！</p>
+<% unless current_user.guest? %>
+  <%= link_to "アカウント情報", account_path, class: "btn btn-primary" %>
+<% end %>
+<%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+<% else %>
+<%= link_to "ログイン", new_user_session_path %> |
+<%= link_to "新規登録", new_user_registration_path %>
+<%= button_to "ゲストログイン", guest_sign_in_path, method: :post, class: "btn btn-secondary" %>
+<% end %>
+
 
       <% unless current_page?(root_path) %>
   <nav class="breadcrumb">
