@@ -11,5 +11,7 @@
 
 <% if @user == current_user %>
   <%= link_to "プロフィールを編集", edit_user_path(@user) %>
+  <%= link_to "投稿一覧", recipes_user_path(@user), class: "btn btn-primary" %>
+<% else %>
+  <%= link_to "このユーザーの投稿一覧", recipes_user_path(@user), class: "btn btn-primary" %>
 <% end %>
-
