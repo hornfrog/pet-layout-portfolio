@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
   root to: "home#index"
   resources :users, only: [:show, :edit, :update] do
+    get :recipes, on: :member
     delete :remove_avatar, on: :collection
   end
   resources :recipes, only: [:index, :new, :create, :show, :edit, :update, :destroy]

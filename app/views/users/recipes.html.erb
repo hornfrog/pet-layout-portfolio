@@ -1,0 +1,13 @@
+<h1><%= link_to "#{@user.name}", user_path(@user) %>さんの投稿レシピ</h1>
+
+<% if @recipes.any? %>
+  <ul>
+    <% @recipes.each do |recipe| %>
+      <li>
+        <%= link_to recipe.title, recipe_path(recipe) %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>まだレシピを投稿していません。</p>
+<% end %>
