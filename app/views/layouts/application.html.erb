@@ -42,6 +42,7 @@
 <p><%= current_user.name %> さん、こんにちは！</p>
 <% unless current_user.guest? %>
   <%= link_to "アカウント情報", account_path, class: "btn btn-primary" %>
+  <%= link_to "プロフィール", current_user %>
   <%= link_to "投稿一覧", recipes_user_path(current_user), class: "btn btn-success" %>
 <% end %>
 <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
