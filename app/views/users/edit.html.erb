@@ -7,23 +7,27 @@
   </div>
 
   <div>
-    <%= f.label :bio, "自己紹介" %>
+    <%= f.label :profile, "自己紹介" %>
     <%= f.text_area :profile, rows: 3 %>
   </div>
 
   <div>
     <%= f.label :avatar, "プロフィール画像" %>
-    <%= f.file_field :avatar %>
+    
+    <div>
+      <% if @user.avatar.attached? %>
+        <%= image_tag @user.avatar, id: "avatar-preview", class: "profile-avatar" %>
+      <% else %>
+        <%= image_tag "no-image.png", id: "avatar-preview", class: "profile-avatar", alt: "デフォルトプロフィール画像" %>
+      <% end %>
+    </div>
+
+    <%= f.file_field :avatar, id: "avatar-input" %>
 
     <% if @user.avatar.attached? %>
       <div>
-        <p>現在の画像:</p>
-        <%= image_tag @user.avatar, class: "profile-avatar" %>
-
-        <div>
-          <%= f.check_box :remove_avatar, { class: "remove-avatar" } %>
-          <%= f.label :remove_avatar, "画像を削除" %>
-        </div>
+        <%= f.check_box :remove_avatar, { class: "remove-avatar" } %>
+        <%= f.label :remove_avatar, "画像を削除" %>
       </div>
     <% end %>
   </div>
@@ -32,3 +36,5 @@
     <%= f.submit "更新する" %>
   </div>
 <% end %>
+
+<%= link_to "戻る", user_path %>

@@ -1,22 +1,26 @@
 document.addEventListener("DOMContentLoaded", function() {
-    const imageInput = document.getElementById("image-input");
-    const previewImage = document.getElementById("preview-image");
-  
-    if (!imageInput || !previewImage) return;
-  
-    imageInput.addEventListener("change", function(event) {
+  function setupImagePreview(inputId, previewId, defaultImage = null) {
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+
+    if (!input || !preview) return;
+
+    input.addEventListener("change", function(event) {
       const file = event.target.files[0];
-  
+
       if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-          previewImage.src = e.target.result;
-          previewImage.style.display = "block";
+          preview.src = e.target.result;
+          preview.style.display = "block";
         };
         reader.readAsDataURL(file);
-      } else {
-        previewImage.src = "#";
-        previewImage.style.display = "none";
+      } else if (defaultImage) {
+        preview.src = defaultImage; 
       }
     });
-  });  
+  }
+
+  setupImagePreview("image-input", "preview-image", "/assets/no-image.png");
+  setupImagePreview("avatar-input", "avatar-preview", "/assets/no-man.png");
+});

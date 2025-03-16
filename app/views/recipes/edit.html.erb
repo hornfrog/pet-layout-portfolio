@@ -2,19 +2,18 @@
 
 <%= form_with model: @recipe, local: true do |f| %>
 
-  <!-- 親カテゴリ -->
   <div>
-  <%= f.label :category_id, "親カテゴリ" %>
+  <%= f.label :category_id, "カテゴリ" %>
   <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "選択してください" }, { id: "parent_category", data: { selected: @recipe.category_id } } %>
 </div>
 
 <div>
-  <%= f.label :child_category_id, "子カテゴリ" %>
+  <%= f.label :child_category_id, "カテゴリ" %>
   <%= f.select :child_category_id, [], { prompt: "選択してください" }, { id: "child_category", data: { selected: @recipe.child_category_id } } %>
 </div>
 
 <div>
-  <%= f.label :grandchild_category_id, "孫カテゴリ" %>
+  <%= f.label :grandchild_category_id, "カテゴリ" %>
   <%= f.select :grandchild_category_id, [], { prompt: "選択してください" }, { id: "grandchild_category", data: { selected: @recipe.grandchild_category_id } } %>
 </div>
 
