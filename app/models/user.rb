@@ -6,9 +6,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
   has_many :recipes, dependent: :destroy
   has_one_attached :avatar
+  has_many :likes, dependent: :destroy
+  has_many :liked_recipes, through: :likes, source: :recipe
   attr_accessor :remove_avatar
 
   def guest?
     email == "guest@example.com"
+  end
+
+  def liked?(recipe)
+    likes.exists?(recipe_id: recipe.id)
   end
 end

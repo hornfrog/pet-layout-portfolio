@@ -1,0 +1,15 @@
+<% if current_user && !current_user.guest? %>
+  <% if current_user.liked?(recipe) %>
+    <button class="like-button" data-url="<%= recipe_like_path(recipe) %>" data-method="delete">
+      <i class="fa-solid fa-heart" style="color: red;"></i> <span class="like-count"><%= recipe.likes.count %></span>
+    </button>
+  <% else %>
+    <button class="like-button" data-url="<%= recipe_like_path(recipe) %>" data-method="post">
+      <i class="fa-regular fa-heart"></i> <span class="like-count"><%= recipe.likes.count %></span>
+    </button>
+  <% end %>
+<% else %>
+  <div>
+    <i class="fa-regular fa-heart"></i> <span class="like-count"><%= recipe.likes.count %></span>
+  </div>
+<% end %>

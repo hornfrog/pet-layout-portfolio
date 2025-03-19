@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'likes/create'
+  get 'likes/destroy'
   devise_for :users, controllers: {
     registrations: "users/registrations"
   }
@@ -12,7 +14,9 @@ Rails.application.routes.draw do
     get :recipes, on: :member
     delete :remove_avatar, on: :collection
   end
-  resources :recipes, only: [:index, :new, :create, :show, :edit, :update, :destroy]
+  resources :recipes, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
+    resource :like, only: [:create, :destroy]
+  end
   resources :categories, only: [:show] do
     collection do
       get :children
