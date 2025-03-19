@@ -8,6 +8,7 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "./category_select.js";
 import "../image_preview.js";
+import "./like";
 
 Rails.start()
 ActiveStorage.start()

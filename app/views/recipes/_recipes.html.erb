@@ -7,7 +7,11 @@
         <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "recipe-image" %>
       <% end %>
     <% end %>
+    
     <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
     <p><%= recipe.description %></p>
+
+    <!-- いいねボタンを表示 -->
+    <%= render "recipes/like_button", recipe: recipe %>
   </div>
 <% end %>
