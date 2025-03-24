@@ -1,0 +1,22 @@
+<h1>お気に入りレシピ一覧</h1>
+
+<% if @favorites.any? %>
+  <ul>
+    <% @favorites.each do |favorite| %>
+      <li>
+        <%= link_to favorite.recipe.title, recipe_path(favorite.recipe) %>
+        
+        <% if favorite.recipe.image.attached? %>
+          <%= image_tag url_for(favorite.recipe.image), alt: favorite.recipe.title, class: "recipe-image" %>
+        <% else %> 
+          <%= image_tag asset_path('no-image.png'), alt: favorite.recipe.title, class: "recipe-image" %>
+        <% end %>
+
+        <%= render "recipes/like_button", recipe: favorite.recipe %>
+        <%= render "recipes/favorite_button", recipe: favorite.recipe %>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>お気に入りのレシピはありません。</p>
+<% end %>

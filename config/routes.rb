@@ -18,6 +18,7 @@ Rails.application.routes.draw do
     resource :like, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
   end
+  resources :favorites, only: [:index]
   resources :categories, only: [:show] do
     collection do
       get :children
