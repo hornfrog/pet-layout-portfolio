@@ -9,6 +9,7 @@ import "channels"
 import "./category_select.js";
 import "../image_preview.js";
 import "./like";
+import './favorite';
 
 Rails.start()
 ActiveStorage.start()

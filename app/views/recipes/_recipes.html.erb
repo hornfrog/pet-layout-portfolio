@@ -11,7 +11,9 @@
     <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
     <p><%= recipe.description %></p>
 
-    <!-- いいねボタンを表示 -->
+    <div class="button-wrapper">
     <%= render "recipes/like_button", recipe: recipe %>
+    <%= render 'recipes/favorite_button', recipe: recipe %>
+  </div>
   </div>
 <% end %>

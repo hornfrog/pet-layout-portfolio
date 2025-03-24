@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   end
   resources :recipes, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
     resource :like, only: [:create, :destroy]
+    resource :favorite, only: [:create, :destroy]
   end
   resources :categories, only: [:show] do
     collection do

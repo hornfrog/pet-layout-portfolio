@@ -8,6 +8,7 @@ class User < ApplicationRecord
   has_one_attached :avatar
   has_many :likes, dependent: :destroy
   has_many :liked_recipes, through: :likes, source: :recipe
+  has_many :favorites, dependent: :destroy
   attr_accessor :remove_avatar
 
   def guest?
