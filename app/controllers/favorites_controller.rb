@@ -3,6 +3,10 @@ class FavoritesController < ApplicationController
   before_action :authenticate_user!
   before_action :reject_guest_user, only: [:create, :destroy]
 
+  def index
+    @favorites = current_user.favorites.includes(:recipe)
+  end
+
   def create
     recipe = Recipe.find(params[:recipe_id])
     favorite = current_user.favorites.build(recipe: recipe)
