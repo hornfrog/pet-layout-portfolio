@@ -5,9 +5,19 @@
     <% @recipes.each do |recipe| %>
       <li>
         <%= link_to recipe.title, recipe_path(recipe) %>
+        
+        <% if recipe.image.attached? %>
+          <%= image_tag url_for(recipe.image), alt: recipe.title, class: "recipe-image" %>
+        <% else %>
+          <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "recipe-image" %>
+        <% end %>
+
+        <%= render "recipes/like_button", recipe: recipe %>
+        <%= render "recipes/favorite_button", recipe: recipe %>
       </li>
     <% end %>
   </ul>
 <% else %>
   <p>まだレシピを投稿していません。</p>
 <% end %>
+
