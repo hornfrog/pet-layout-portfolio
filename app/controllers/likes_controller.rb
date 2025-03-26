@@ -5,6 +5,8 @@ class LikesController < ApplicationController
   before_action :set_recipe, only: [:create, :destroy]
 
   def create
+    return head :forbidden if @recipe.user == current_user
+
     @like = current_user.likes.find_or_initialize_by(recipe: @recipe)
 
     if @like.persisted? || @like.save

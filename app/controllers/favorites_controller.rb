@@ -9,12 +9,15 @@ class FavoritesController < ApplicationController
 
   def create
     recipe = Recipe.find(params[:recipe_id])
+
+    return head :forbidden if recipe.user == current_user
+
     favorite = current_user.favorites.build(recipe: recipe)
 
     if favorite.save
       render json: { status: "success", message: "お気に入りに追加しました。" }
     else
-      render json: { status: "error", message: "お気に入り登録に失敗しました。" }
+      render json: { status: "error" }, status: :unprocessable_entity
     end
   end
 
