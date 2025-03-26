@@ -16,6 +16,8 @@ class RecipesController < ApplicationController
     else
       @recipes = Recipe.all
     end
+
+    @total_recipes_count = @recipes.count
   end
 
   def show

@@ -10,7 +10,7 @@
     
     <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
     <p><%= recipe.description %></p>
-
+    <p>投稿者: <%= link_to recipe.user.name, user_path(recipe.user) %></p>
     <div class="button-wrapper">
     <%= render "recipes/like_button", recipe: recipe %>
     <%= render 'recipes/favorite_button', recipe: recipe %>
