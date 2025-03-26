@@ -37,8 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         })
         .catch(error => {
-          alert(error.message);
-        });
+            console.error("Error:", error.message);
+          });
       });
     });
   });
