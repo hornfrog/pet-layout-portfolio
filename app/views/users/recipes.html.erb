@@ -1,4 +1,5 @@
 <h1><%= link_to "#{@user.name}", user_path(@user) %>さんの投稿レシピ</h1>
+<p>投稿数: <%= @recipe_count %> 件</p>
 
 <% if @recipes.any? %>
   <ul>
