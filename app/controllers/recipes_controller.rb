@@ -20,6 +20,16 @@ class RecipesController < ApplicationController
     @total_recipes_count = @recipes.count
   end
 
+  def search
+    @recipes = if params[:keyword].present?
+                 Recipe.search_by_keyword(params[:keyword]).includes(:category, :likes)
+               else
+                 Recipe.includes(:category, :likes)
+               end
+
+    render :search
+  end
+
   def show
     @categories = Category.where(parent_id: nil)
   end

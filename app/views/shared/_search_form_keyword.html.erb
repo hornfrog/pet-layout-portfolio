@@ -1,0 +1,6 @@
+<%= form_with url: search_recipes_path, method: :get, local: true do |f| %>
+    <div>
+      <%= f.text_field :keyword, placeholder: "キーワードで検索" %>
+      <%= f.submit "検索" %>
+    </div>
+<% end %>
