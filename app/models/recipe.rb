@@ -8,6 +8,14 @@ class Recipe < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
 
+  scope :search_by_keyword, lambda { |keyword|
+    if keyword.present?
+      where("title LIKE :keyword OR description LIKE :keyword", keyword: "%#{sanitize_sql_like(keyword)}%")
+    else
+      none
+    end
+  }
+
   def category_hierarchy
     [category, child_category, grandchild_category].compact
   end

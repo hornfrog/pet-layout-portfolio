@@ -1,0 +1,29 @@
+<h1>検索結果</h1>
+
+<%= render 'shared/search_form_keyword' %>
+
+<% if @recipes.any? %>
+  <% @recipes.each do |recipe| %>
+    <div class="recipe-card">
+      <%= link_to recipe_path(recipe) do %>
+        <% if recipe.image.attached? %>
+          <%= image_tag url_for(recipe.image), alt: recipe.title, class: "recipe-image" %>
+        <% else %> 
+          <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "recipe-image" %>
+        <% end %>
+      <% end %>
+
+      <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
+      <p><%= recipe.description %></p>
+      <p>投稿者: <%= link_to recipe.user.name, user_path(recipe.user) %></p>
+
+      <div class="button-wrapper">
+        <%= render "recipes/like_button", recipe: recipe %>
+        <%= render 'recipes/favorite_button', recipe: recipe %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>該当するレシピが見つかりませんでした。</p>
+<% end %>
+
