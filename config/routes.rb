@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     delete :remove_avatar, on: :collection
   end
   resources :recipes, only: [:index, :new, :create, :show, :edit, :update, :destroy] do
+    collection do
+      get :search
+    end
     resource :like, only: [:create, :destroy]
     resource :favorite, only: [:create, :destroy]
   end
