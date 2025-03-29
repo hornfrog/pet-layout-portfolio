@@ -26,7 +26,7 @@ class RecipesController < ApplicationController
                else
                  Recipe.includes(:category, :likes)
                end
-
+    @total_recipes_count = @recipes.count
     render :search
   end
 
