@@ -2,6 +2,8 @@
 
 <%= render 'shared/search_form_keyword' %>
 
+<p>検索結果: <%= @recipes.count %> 件見つかりました。</p>
+
 <% if @recipes.any? %>
   <% @recipes.each do |recipe| %>
     <div class="recipe-card">
