@@ -5,6 +5,7 @@ class RecipesController < ApplicationController
   before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   def index
+    @parent_categories = Category.where(parent_id: nil)
     if params[:category_id]
       category = Category.find(params[:category_id])
       category_ids = category.self_and_descendants_ids
@@ -21,12 +22,10 @@ class RecipesController < ApplicationController
   end
 
   def search
-    @recipes = if params[:keyword].present?
-                 Recipe.search_by_keyword(params[:keyword]).includes(:category, :likes)
-               else
-                 Recipe.includes(:category, :likes)
-               end
+    @recipes = fetch_recipes
+    apply_filters
     @total_recipes_count = @recipes.count
+
     render :search
   end
 
@@ -78,5 +77,23 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:title, :description, :category_id, :child_category_id, :grandchild_category_id, :image)
+  end
+
+  def fetch_recipes
+    if params[:keyword].present?
+      Recipe.search_by_keyword(params[:keyword]).includes(:category, :likes)
+    else
+      Recipe.includes(:category, :likes)
+    end
+  end
+
+  def apply_filters
+    apply_category_filter(:category_id, params[:parent_category])
+    apply_category_filter(:child_category_id, params[:child_category])
+    apply_category_filter(:grandchild_category_id, params[:grandchild_category])
+  end
+
+  def apply_category_filter(column, value)
+    @recipes = @recipes.where(column => value) if value.present?
   end
 end

@@ -6,6 +6,7 @@
 import Rails from "@rails/ujs"
 import * as ActiveStorage from "@rails/activestorage"
 import "channels"
+import "../modules/category_select";
 import "./category_select.js";
 import "../image_preview.js";
 import "./like";
