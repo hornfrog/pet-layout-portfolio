@@ -16,6 +16,18 @@ class Recipe < ApplicationRecord
     end
   }
 
+  scope :search_by_category, lambda { |category_id|
+    if category_id.present?
+      category = Category.find(category_id)
+      ids = category.self_and_descendants_ids.to_a
+      where(category_id: ids)
+        .or(where(child_category_id: ids))
+        .or(where(grandchild_category_id: ids))
+    else
+      all
+    end
+  }
+
   def category_hierarchy
     [category, child_category, grandchild_category].compact
   end
