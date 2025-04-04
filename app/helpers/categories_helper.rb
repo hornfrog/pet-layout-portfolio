@@ -41,9 +41,9 @@ module CategoriesHelper
     content_tag(:div, class: "category-select") do
       safe_join([
                   form.select(parent_name, options_from_collection_for_select(parent_categories, :id, :name, parent_id),
-                              { prompt: "親カテゴリを選択" }, { id: "search_parent_category" }),
-                  form.select(child_name, [], { prompt: "子カテゴリを選択" }, { id: "search_child_category" }),
-                  form.select(grandchild_name, [], { prompt: "孫カテゴリを選択" }, { id: "search_grandchild_category" })
+                              { prompt: "カテゴリを選択" }, { id: "search_parent_category" }),
+                  form.select(child_name, [], { prompt: "カテゴリを選択" }, { id: "search_child_category" }),
+                  form.select(grandchild_name, [], { prompt: "カテゴリを選択" }, { id: "search_grandchild_category" })
                 ])
     end
   end
