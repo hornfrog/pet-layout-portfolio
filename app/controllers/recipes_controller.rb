@@ -14,7 +14,7 @@ class RecipesController < ApplicationController
     @recipes = fetch_recipes
     apply_filters
     apply_sorting
-    @total_recipes_count = @recipes.count
+    @total_recipes_count = @recipes.count(:id)
 
     render :search
   end
@@ -74,7 +74,7 @@ class RecipesController < ApplicationController
     apply_search
     apply_filters
     apply_sorting
-    @recipes = @recipes.includes(:category, :likes).distinct
+    @recipes = @recipes.includes(:category, :likes)
   end
 
   def base_recipes
@@ -109,6 +109,10 @@ class RecipesController < ApplicationController
                  @recipes.order(created_at: :desc)
                when "oldest"
                  @recipes.order(created_at: :asc)
+               when "likes"
+                 @recipes.left_joins(:likes)
+                         .group("recipes.id")
+                         .reorder(Arel.sql("COUNT(likes.id) DESC, recipes.created_at DESC"))
                else
                  @recipes
                end

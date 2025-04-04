@@ -6,7 +6,7 @@
 
 <% if @recipes&.any? %>
   <% @recipes.each do |recipe| %>
-    <% Rails.logger.debug "Recipe ID: #{recipe.id}, category_id: #{recipe.category_id}, child_category_id: #{recipe.child_category_id}, grandchild_category_id: #{recipe.grandchild_category_id}" %>
+    <% "Recipe ID: #{recipe.id}, category_id: #{recipe.category_id}, child_category_id: #{recipe.child_category_id}, grandchild_category_id: #{recipe.grandchild_category_id}" %>
     <div class="recipe-card">
       <%= link_to recipe_path(recipe) do %>
         <% if recipe.image.attached? %>
