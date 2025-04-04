@@ -6,24 +6,14 @@ class RecipesController < ApplicationController
 
   def index
     @parent_categories = Category.where(parent_id: nil)
-    if params[:category_id]
-      category = Category.find(params[:category_id])
-      category_ids = category.self_and_descendants_ids
-
-      @recipes = Recipe.where(category_id: category_ids)
-                       .or(Recipe.where(child_category_id: category_ids))
-                       .or(Recipe.where(grandchild_category_id: category_ids))
-                       .distinct
-    else
-      @recipes = Recipe.all
-    end
-
-    @total_recipes_count = @recipes.count
+    @recipes = fetch_recipes
+    @total_recipes_count = @recipes.count(:id)
   end
 
   def search
     @recipes = fetch_recipes
     apply_filters
+    apply_sorting
     @total_recipes_count = @recipes.count
 
     render :search
@@ -80,20 +70,47 @@ class RecipesController < ApplicationController
   end
 
   def fetch_recipes
-    if params[:keyword].present?
-      Recipe.search_by_keyword(params[:keyword]).includes(:category, :likes)
-    else
-      Recipe.includes(:category, :likes)
-    end
+    @recipes = base_recipes
+    apply_search
+    apply_filters
+    apply_sorting
+    @recipes = @recipes.includes(:category, :likes).distinct
+  end
+
+  def base_recipes
+    return Recipe.order(created_at: :desc) if params[:category_id].blank?
+
+    category = Category.find(params[:category_id])
+    category_ids = category.self_and_descendants_ids
+
+    Recipe.where(category_id: category_ids)
+          .or(Recipe.where(child_category_id: category_ids))
+          .or(Recipe.where(grandchild_category_id: category_ids))
+          .order(created_at: :desc)
+  end
+
+  def apply_search
+    return if params[:keyword].blank?
+
+    @recipes = @recipes.search_by_keyword(params[:keyword])
   end
 
   def apply_filters
-    apply_category_filter(:category_id, params[:parent_category])
-    apply_category_filter(:child_category_id, params[:child_category])
-    apply_category_filter(:grandchild_category_id, params[:grandchild_category])
+    { category_id: params[:parent_category],
+      child_category_id: params[:child_category],
+      grandchild_category_id: params[:grandchild_category] }.each do |column, value|
+      @recipes = @recipes.where(column => value) if value.present?
+    end
   end
 
-  def apply_category_filter(column, value)
-    @recipes = @recipes.where(column => value) if value.present?
+  def apply_sorting
+    @recipes = case params[:sort]
+               when "latest"
+                 @recipes.order(created_at: :desc)
+               when "oldest"
+                 @recipes.order(created_at: :asc)
+               else
+                 @recipes
+               end
   end
 end

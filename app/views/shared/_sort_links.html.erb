@@ -1,0 +1,5 @@
+<div class="sort-options">
+  <p>並び替え:</p>
+  <%= link_to "新しい順", search_recipes_path(sort: 'latest', keyword: params[:keyword], category_id: params[:category_id]), class: "sort-link" %>
+  <%= link_to "古い順", search_recipes_path(sort: 'oldest', keyword: params[:keyword], category_id: params[:category_id]), class: "sort-link" %>
+</div>
