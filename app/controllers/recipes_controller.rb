@@ -6,7 +6,7 @@ class RecipesController < ApplicationController
 
   def index
     @parent_categories = Category.where(parent_id: nil)
-    @recipes = fetch_recipes
+    @recipes = Recipes::Fetcher.new(params: params).call
     @total_recipes_count = @recipes.except(:group).count
 
     respond_to do |format|
@@ -16,9 +16,7 @@ class RecipesController < ApplicationController
   end
 
   def search
-    @recipes = fetch_recipes
-    apply_filters
-    apply_sorting
+    @recipes = Recipes::Fetcher.new(params: params).call
     @total_recipes_count = @recipes.except(:group).count
 
     respond_to do |format|
@@ -63,6 +61,12 @@ class RecipesController < ApplicationController
     redirect_to recipes_path, notice: I18n.t('notices.recipe_deleted')
   end
 
+  def render_recipes_json
+    html = render_to_string(partial: "recipes/recipe_list", formats: [:html], locals: { recipes: @recipes })
+    count = @total_recipes_count.is_a?(Hash) ? @total_recipes_count.values.sum : @total_recipes_count
+    render json: { html: html, count: count }
+  end
+
   private
 
   def set_recipe
@@ -75,60 +79,5 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:title, :description, :category_id, :child_category_id, :grandchild_category_id, :image)
-  end
-
-  def fetch_recipes
-    @recipes = base_recipes
-    apply_search
-    apply_filters
-    apply_sorting
-    @recipes = @recipes.includes(:category, :likes)
-  end
-
-  def base_recipes
-    return Recipe.order(created_at: :desc) if params[:category_id].blank?
-
-    category = Category.find(params[:category_id])
-    category_ids = category.self_and_descendants_ids
-
-    Recipe.where(category_id: category_ids)
-          .or(Recipe.where(child_category_id: category_ids))
-          .or(Recipe.where(grandchild_category_id: category_ids))
-          .order(created_at: :desc)
-  end
-
-  def apply_search
-    return if params[:keyword].blank?
-
-    @recipes = @recipes.search_by_keyword(params[:keyword])
-  end
-
-  def apply_filters
-    { category_id: params[:parent_category],
-      child_category_id: params[:child_category],
-      grandchild_category_id: params[:grandchild_category] }.each do |column, value|
-      @recipes = @recipes.where(column => value) if value.present?
-    end
-  end
-
-  def apply_sorting
-    @recipes = case params[:sort]
-               when "latest"
-                 @recipes.reorder(created_at: :desc)
-               when "oldest"
-                 @recipes.reorder(created_at: :asc)
-               when "likes"
-                 @recipes.left_joins(:likes)
-                         .group("recipes.id")
-                         .reorder(Arel.sql("COUNT(likes.id) DESC, recipes.created_at DESC"))
-               else
-                 @recipes.reorder(created_at: :desc)
-               end
-  end
-
-  def render_recipes_json
-    html = render_to_string(partial: "recipes/recipe_list", formats: [:html], locals: { recipes: @recipes })
-    count = @total_recipes_count.is_a?(Hash) ? @total_recipes_count.values.sum : @total_recipes_count
-    render json: { html: html, count: count }
   end
 end

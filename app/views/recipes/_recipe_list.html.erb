@@ -11,7 +11,7 @@
     <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
     <p><%= recipe.description %></p>
     <p>投稿者: <%= link_to recipe.user.name, user_path(recipe.user) %></p>
-
+    <p>投稿日: <%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %></p>
     <div class="button-wrapper">
       <%= render "recipes/like_button", recipe: recipe %>
       <%= render "recipes/favorite_button", recipe: recipe %>
