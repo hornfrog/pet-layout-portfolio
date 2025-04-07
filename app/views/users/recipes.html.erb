@@ -12,7 +12,7 @@
         <% else %>
           <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "recipe-image" %>
         <% end %>
-
+        <p>投稿日: <%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %></p>
         <%= render "recipes/like_button", recipe: recipe %>
         <%= render "recipes/favorite_button", recipe: recipe %>
       </li>

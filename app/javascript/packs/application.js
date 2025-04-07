@@ -11,6 +11,7 @@ import "./category_select.js";
 import "../image_preview.js";
 import "./like";
 import './favorite';
+import "sort_tabs";
 
 Rails.start()
 ActiveStorage.start()
