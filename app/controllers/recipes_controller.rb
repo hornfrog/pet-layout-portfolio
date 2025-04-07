@@ -7,16 +7,24 @@ class RecipesController < ApplicationController
   def index
     @parent_categories = Category.where(parent_id: nil)
     @recipes = fetch_recipes
-    @total_recipes_count = @recipes.count(:id)
+    @total_recipes_count = @recipes.except(:group).count
+
+    respond_to do |format|
+      format.html
+      format.json { render_recipes_json }
+    end
   end
 
   def search
     @recipes = fetch_recipes
     apply_filters
     apply_sorting
-    @total_recipes_count = @recipes.count(:id)
+    @total_recipes_count = @recipes.except(:group).count
 
-    render :search
+    respond_to do |format|
+      format.html
+      format.json { render_recipes_json }
+    end
   end
 
   def show
@@ -106,15 +114,21 @@ class RecipesController < ApplicationController
   def apply_sorting
     @recipes = case params[:sort]
                when "latest"
-                 @recipes.order(created_at: :desc)
+                 @recipes.reorder(created_at: :desc)
                when "oldest"
-                 @recipes.order(created_at: :asc)
+                 @recipes.reorder(created_at: :asc)
                when "likes"
                  @recipes.left_joins(:likes)
                          .group("recipes.id")
                          .reorder(Arel.sql("COUNT(likes.id) DESC, recipes.created_at DESC"))
                else
-                 @recipes
+                 @recipes.reorder(created_at: :desc)
                end
+  end
+
+  def render_recipes_json
+    html = render_to_string(partial: "recipes/recipe_list", formats: [:html], locals: { recipes: @recipes })
+    count = @total_recipes_count.is_a?(Hash) ? @total_recipes_count.values.sum : @total_recipes_count
+    render json: { html: html, count: count }
   end
 end

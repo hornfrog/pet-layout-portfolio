@@ -1,6 +1,9 @@
 <h1>レシピ一覧</h1>
-<%= render 'shared/sort_links' %>
+<%= render 'recipes/sort_tabs' %>
 <h2>投稿件数: <%= @total_recipes_count %> 件</h2>
-<%= render 'shared/search_form_keyword' %>
+
 <%= render 'shared/search_form_category' %>
-<%= render 'recipes/recipes' %>
+
+<div id="recipes-list">
+  <%= render 'recipes/recipe_list', recipes: @recipes %>
+</div>

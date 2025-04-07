@@ -1,9 +1,9 @@
-<% @recipes.each do |recipe| %>
+<% recipes.each do |recipe| %>
   <div class="recipe-card">
     <%= link_to recipe_path(recipe) do %>
       <% if recipe.image.attached? %>
         <%= image_tag url_for(recipe.image), alt: recipe.title, class: "recipe-image" %>
-      <% else %> 
+      <% else %>
         <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "recipe-image" %>
       <% end %>
     <% end %>
@@ -11,10 +11,12 @@
     <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
     <p><%= recipe.description %></p>
     <p>投稿者: <%= link_to recipe.user.name, user_path(recipe.user) %></p>
-    <p>投稿日: <%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+
     <div class="button-wrapper">
-    <%= render "recipes/like_button", recipe: recipe %>
-    <%= render 'recipes/favorite_button', recipe: recipe %>
-  </div>
+      <%= render "recipes/like_button", recipe: recipe %>
+      <%= render "recipes/favorite_button", recipe: recipe %>
+    </div>
   </div>
 <% end %>
+  
+
