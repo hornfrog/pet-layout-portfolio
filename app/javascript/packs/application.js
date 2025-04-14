@@ -12,6 +12,7 @@ import "../image_preview.js";
 import "./like";
 import './favorite';
 import "sort_tabs";
+import 'bootstrap'
 
 Rails.start()
 ActiveStorage.start()

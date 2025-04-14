@@ -5,6 +5,8 @@
 
 <p>検索結果: <%= @total_recipes_count %> 件見つかりました。</p>
 
-<div id="recipes-list">
-  <%= render 'recipes/recipe_list', recipes: @recipes %>
+<div class="container">
+  <div id="recipes-list">
+    <%= render 'recipes/recipe_list', recipes: @recipes %>
+  </div>
 </div>

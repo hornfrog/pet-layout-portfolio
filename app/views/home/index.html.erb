@@ -1,3 +1,24 @@
-<h1>Home#index</h1>
-<%= render 'recipes/recipes' %>
-<%= link_to 'もっと見る', recipes_path, class: "see-more-button" %>
+<div class="bootstrap-area">
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="main-title">TERRA SPACE</h1>
+        <p class="lead text-body-secondary">生き物と暮らす空間</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-body-tertiary ">
+    <div class="container">
+    <div class="text-center mb-0">
+      <h1 class="section-title">新着投稿</h1>
+    </div>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        <%= render "recipes/recipes" %>
+      </div>
+      <%= link_to '投稿をもっと見る', recipes_path, class: "see-more-button" %>
+    </div>
+  </div>
+</div>
+
+
