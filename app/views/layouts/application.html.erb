@@ -8,52 +8,61 @@
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/2becc35aba.js" crossorigin="anonymous"></script>
+
     <%= stylesheet_link_tag "application", media: "all" %>
     <%= javascript_pack_tag "application", defer: true, data: { turbo: false } %>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   </head>
 
   <body>
-    <header>
-    <nav>
-  <%= category_navigation(@categories) %>
-  <%= render 'shared/search_form_keyword' %>
-  <%= link_to "新規投稿", new_recipe_path %>
-</nav>
-
-<% if user_signed_in? %>
-<p><%= current_user.name %> さん、こんにちは！</p>
-<% unless current_user.guest? %>
-  <%= link_to "アカウント情報", account_path, class: "btn btn-primary" %>
-  <%= link_to "プロフィール", current_user %>
-  <%= link_to "投稿一覧", recipes_user_path(current_user), class: "btn btn-success" %>
-  <%= link_to "お気に入り一覧", favorites_path %>
-<% end %>
-<%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
-<% else %>
-<%= link_to "ログイン", new_user_session_path %> 
-<%= link_to "新規登録", new_user_registration_path %>
-<%= link_to "ゲストログイン", guest_sign_in_path, method: :post, class: "btn btn-secondary" %>
-<% end %>
-
-
-      <% unless current_page?(root_path) %>
-  <nav class="breadcrumb">
-    <%= link_to "Home", root_path %> >
-    <% if @recipe %>
-      <% @recipe.category_hierarchy.each do |category| %>
-        <%= link_to category.name, category_path(category) %>
-        <% unless category == @recipe.category %> > <% end %>
+  <header class="header bg-white border-bottom py-0 mb-0">
+  <div class="container-fluid px-4">
+  <div class="header-inner">
+      <div class="header-left d-flex align-items-center gap-3">
+      <%= link_to root_path do %>
+        <%= image_tag "logofrog.png", alt: "ロゴ", class: "logofrog" %>
       <% end %>
-    <% elsif @category %>
-      <% @category.self_and_ancestors.each do |category| %>
-        <%= link_to category.name, category_path(category) %>
-        <% unless category == @category %> > <% end %>
-      <% end %>
-    <% end %>
-  </nav>
-<% end %>
+  
+      <%= link_to "投稿一覧", recipes_path, class: "nav-link" %>
 
-<% if flash[:notice] %>
+        <%= category_navigation(@categories) %>
+        <%= render 'shared/search_form_keyword' %>
+      </div>
+
+      <div class="header-right text-end">
+        <% if user_signed_in? %>
+          <div class="dropdown">
+            <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
+              <% if current_user.avatar.attached? %>
+                <%= image_tag current_user.avatar, alt: "アバター", width: 32, height: 32, class: "rounded-circle me-2" %>
+              <% else %>
+                <%= image_tag "no-man.png", alt: "デフォルトアイコン", width: 32, height: 32, class: "rounded-circle me-2" %>
+              <% end %>
+              <strong><%= current_user.name %></strong>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
+              <% unless current_user.guest? %>
+                <li><%= link_to "アカウント情報", account_path, class: "dropdown-item" %></li>
+                <li><%= link_to "プロフィール", current_user, class: "dropdown-item" %></li>
+                <li><%= link_to "投稿一覧", recipes_user_path(current_user), class: "dropdown-item" %></li>
+                <li><%= link_to "お気に入り一覧", favorites_path, class: "dropdown-item" %></li>
+                <li><hr class="dropdown-divider"></li>
+              <% end %>
+              <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
+            </ul>
+          </div>
+        <% else %>
+          <%= link_to "ログイン", new_user_session_path, class: "btn btn-outline-primary me-2" %>
+          <%= link_to "ゲストログイン", guest_sign_in_path, method: :post, class: "btn btn-outline-secondary me-2" %>
+          <%= link_to "新規登録", new_user_registration_path, class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+ </header>
+
+ <% if flash[:notice] %>
         <div class="alert alert-success">
           <%= flash[:notice] %>
         </div>
@@ -61,9 +70,8 @@
         <div class="alert alert-danger">
           <%= flash[:alert] %>
         </div>
-      <% end %>
-      
-    </header>
+  <% end %>
+
     <%= yield %>
   </body>
 </html>
