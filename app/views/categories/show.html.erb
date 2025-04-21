@@ -1,19 +1,25 @@
-<h1><%= @category.name %> のレシピ一覧</h1>
+<div class="recipe-index-wrapper category-page">
+  <h1 class="page-title"><%= @category.name %> のレシピ一覧</h1>
+  <p class="post-count">投稿件数: <%= @recipes.count %> 件</p>
 
-<% if @recipes.any? %>
-  <div class="recipe-list">
-    <% @recipes.each do |recipe| %>
-      <div class="recipe-card">
-        <%= link_to recipe_path(recipe) do %>
-          <% if recipe.image.attached? %>
-            <%= image_tag url_for(recipe.image), alt: recipe.title, class: "recipe-image" %>
-          <% end %>
-        <% end %>
-        <h2><%= link_to recipe.title, recipe_path(recipe) %></h2>
-        <p>投稿者: <%= recipe.user.name %></p>
-      </div>
-    <% end %>
+  <div class="search-form-wrapper">
+    <%= render 'shared/search_form_category' %>
   </div>
-<% else %>
-  <p>このカテゴリにはまだレシピがありません。</p>
-<% end %>
+</div>
+
+<div class="sort-tabs-wrapper">
+  <%= render 'recipes/sort_tabs' %>
+</div>
+
+<div class="container">
+  <div id="recipes-list">
+    <%= render 'recipes/recipe_list', recipes: @recipes %>
+  </div>
+</div>
+
+<div class="pagination-wrapper mt-4">
+  <div class="d-flex justify-content-center">
+    <%= paginate @recipes if @recipes.respond_to?(:total_pages) %>
+  </div>
+</div>
+
