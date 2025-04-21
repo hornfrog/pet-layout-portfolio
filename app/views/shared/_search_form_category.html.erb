@@ -1,12 +1,20 @@
-<%= form_with url: search_recipes_path, method: :get, local: true do |f| %>
-  <%= text_field_tag :keyword, params[:keyword], placeholder: "キーワードを入力" %>
+<%= form_with url: search_recipes_path, method: :get, local: true, html: { class: "search-form" } do |f| %>
+  <div class="form-group keyword">
+    <%= label_tag :keyword, "キーワード" %>
+    <%= text_field_tag :keyword, params[:keyword], placeholder: "キーワードを入力" %>
+  </div>
 
-  <%= category_selects(f, :parent_category, :child_category, :grandchild_category, 
-                      { parent: params[:parent_category], child: params[:child_category], grandchild: params[:grandchild_category] }) %>
-
-  <%= hidden_field_tag :child_category, params[:child_category], id: "hidden_child_category" %>
-  <%= hidden_field_tag :grandchild_category, params[:grandchild_category], id: "hidden_grandchild_category" %>
-
-  <%= submit_tag "検索" %>
+  <div class="form-group categories">
+  <%= label_tag :category, "カテゴリ選択" %>
+  <div class="category-selects">
+    <%= category_selects(f, :parent_category, :child_category, :grandchild_category, 
+                        { parent: params[:parent_category], child: params[:child_category], grandchild: params[:grandchild_category] }) %>
+    <%= hidden_field_tag :child_category, params[:child_category], id: "hidden_child_category" %>
+    <%= hidden_field_tag :grandchild_category, params[:grandchild_category], id: "hidden_grandchild_category" %>
+  </div>
+  </div>
+  <div class="form-group submit">
+    <%= submit_tag "検索" %>
+  </div>  
 <% end %>
 

@@ -1,0 +1,31 @@
+.sort-options {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .sort-tab {
+    font-size: 1rem;
+    font-weight: bold;
+    padding: 0.5rem 0.5rem;
+    cursor: pointer;
+    text-decoration: none;
+    color: #333;
+    transition: color 0.2s ease;
+    border-bottom: 1px solid transparent;
+  
+    &:hover {
+      color: #007bff;
+      border-bottom: 1px solid #007bff;
+    }
+  
+    &.active {
+      color: #007bff;
+      font-weight: bold;
+      border-bottom: 1px solid #007bff;
+    }
+  }  
+  
+  
+  

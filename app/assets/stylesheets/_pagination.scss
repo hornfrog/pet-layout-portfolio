@@ -1,0 +1,36 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+  
+    .page {
+      a, span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 2.5rem;
+        height: 2.5rem;
+        border: 1px solid #2589d0;
+        color: #2589d0;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 2px;
+      }
+  
+      &:hover a {
+        background-color: #f0f8ff;
+      }
+  
+      &.current span {
+        background-color: #2589d0;
+        color: white;
+        pointer-events: none;
+      }
+    }
+  }
+  
+  
