@@ -16,7 +16,7 @@ module Recipes
       apply_search
       apply_filters
       apply_sorting
-      @recipes.includes(:category, :likes)
+      @recipes.includes(:category, :likes).page(params[:page]).per(9)
     end
 
     private
@@ -60,7 +60,7 @@ module Recipes
           @recipes.reorder(created_at: :asc)
         when "likes"
           @recipes.left_joins(:likes)
-                  .group("recipes.id")
+                  .group("recipes.id, recipes.created_at")
                   .reorder(Arel.sql("COUNT(likes.id) DESC, recipes.created_at DESC"))
         else
           @recipes.reorder(created_at: :desc)

@@ -43,5 +43,28 @@
       }
     }
   }
+
+  .recipe-action-button {
+    all: unset;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 1.2rem;
   
+    i {
+      transition: color 0.3s ease-in-out;
+      margin-right: 4px;
+    }
+  }
+  
+  .like-button:hover i {
+    color: #ff4d4d;
+  }
+  
+  .favorite-button:hover i {
+    color: gold;
+  }
+  
+
 

@@ -1,10 +1,26 @@
-<h1>レシピ一覧</h1>
-<%= render 'recipes/sort_tabs' %>
-<h2>投稿件数: <%= @total_recipes_count %> 件</h2>
-<%= render 'shared/search_form_category' %>
-
-<div class="container">
-  <div id="recipes-list">
-    <%= render 'recipes/recipe_list', recipes: @recipes %>
-  </div>    
+<div class="recipe-index-wrapper">
+  <h1 class="page-title">投稿一覧</h1>
+<p class="post-count">投稿件数: <%= @total_recipes_count %> 件</p>
+  <div class="search-form-wrapper">
+    <%= render 'shared/search_form_category' %>
+  </div>
 </div>
+
+<div class="sort-tabs-wrapper">
+    <%= render 'recipes/sort_tabs' %>
+</div>
+
+  <div class="container">
+  
+    <div id="recipes-list">
+      <%= render 'recipes/recipe_list', recipes: @recipes %>
+    </div>
+  </div>
+
+  <div class="pagination-wrapper mt-4">
+    <div class="d-flex justify-content-center">
+      <%= paginate @recipes if @recipes.respond_to?(:total_pages) %>
+    </div>
+  </div>
+
+

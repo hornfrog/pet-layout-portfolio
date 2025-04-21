@@ -4,16 +4,49 @@
  @import "home";
  @import "recipes";
  @import "recipe_card";
+ @import "pagination";
+ @import "search_form_category"; 
+ @import "sort_tabs"; 
 
-.alert-success {
+.btn-green {
+background-color: #4f9e48;
+color: #fff;
+border: none;
+border-radius: 6px;
+
+&:hover {
+    background-color: #229a3a;
+}
+}
+.flash-message-bg {
+    width: 100vw;
+    background-color: transparent;
+    display: flex;
+    justify-content: center;
+    margin-top: 60px;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+  
+  .flash-message-inner {
+    width: 100%;
+    height: 59px;
+    max-width: 100%;
+  }
+  
+  .alert-success {
     background-color: #d4edda;
     color: #155724;
-    border-color: #c3e6cb;
+    border: 1px solid #c3e6cb;
+    border-radius: 4px;
   }
   
   .alert-danger {
     background-color: #f8d7da;
     color: #721c24;
-    border-color: #f5c6cb;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
   }
+  
+  
   

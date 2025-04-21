@@ -1,7 +1,5 @@
 <div class="sort-options">
-  <p>並び替え:</p>
-  <button class="sort-tab" data-sort="latest">新しい順</button>
-  <button class="sort-tab" data-sort="oldest">古い順</button>
-  <button class="sort-tab" data-sort="likes">いいね順</button>
+  <%= link_to '新しい順', recipes_path(sort: 'latest'), class: "sort-tab #{'active' if params[:sort] == 'latest'}", data: { sort: "latest" } %>
+  <%= link_to '古い順', recipes_path(sort: 'oldest'), class: "sort-tab #{'active' if params[:sort] == 'oldest'}", data: { sort: "oldest" } %>
+  <%= link_to 'いいね順', recipes_path(sort: 'likes'), class: "sort-tab #{'active' if params[:sort] == 'likes'}", data: { sort: "likes" } %>
 </div>
-

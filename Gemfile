@@ -65,3 +65,4 @@ gem 'concurrent-ruby', '1.3.4'
 gem 'devise'
 gem 'devise-i18n'
 gem "bootstrap", "~> 5.3.0"
+gem 'kaminari'

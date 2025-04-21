@@ -7,7 +7,7 @@ class RecipesController < ApplicationController
   def index
     @parent_categories = Category.where(parent_id: nil)
     @recipes = Recipes::Fetcher.new(params: params).call
-    @total_recipes_count = @recipes.except(:group).count
+    @total_recipes_count = @recipes.except(:group).reorder(nil).count
 
     respond_to do |format|
       format.html
@@ -17,7 +17,7 @@ class RecipesController < ApplicationController
 
   def search
     @recipes = Recipes::Fetcher.new(params: params).call
-    @total_recipes_count = @recipes.except(:group).count
+    @total_recipes_count = @recipes.except(:group).reorder(nil).count
 
     respond_to do |format|
       format.html
