@@ -1,12 +1,24 @@
-<h1>検索結果</h1>
+<div class="recipe-index-wrapper">
+  <h1 class="page-title">検索結果</h1>
+  <p class="post-count">検索結果: <%= @total_recipes_count %> 件見つかりました。</p>
 
-<%= render 'shared/search_form_category' %>
-<%= render 'recipes/sort_tabs' %>
+  <div class="search-form-wrapper">
+    <%= render 'shared/search_form_category' %>
+  </div>
+</div>
 
-<p>検索結果: <%= @total_recipes_count %> 件見つかりました。</p>
+<div class="sort-tabs-wrapper">
+  <%= render 'recipes/sort_tabs' %>
+</div>
 
 <div class="container">
   <div id="recipes-list">
     <%= render 'recipes/recipe_list', recipes: @recipes %>
+  </div>
+</div>
+
+<div class="pagination-wrapper mt-4">
+  <div class="d-flex justify-content-center">
+    <%= paginate @recipes if @recipes.respond_to?(:total_pages) %>
   </div>
 </div>
