@@ -2,7 +2,8 @@ Rails.application.routes.draw do
   get 'likes/create'
   get 'likes/destroy'
   devise_for :users, controllers: {
-    registrations: "users/registrations"
+    registrations: "users/registrations",
+    sessions: "users/sessions"
   }
 
   devise_scope :user do
