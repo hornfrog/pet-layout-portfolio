@@ -32,7 +32,7 @@
 
       <div class="header-right text-end">
         <% if user_signed_in? %>
-        <%= button_to "新規投稿", new_recipe_path, class: "btn-green me-2" %>
+        <%= link_to "新規投稿", new_recipe_path, class: "btn-green me-2" %>
           <div class="dropdown">
             <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
               <% if current_user.avatar.attached? %>
@@ -56,7 +56,7 @@
         <% else %>
           <%= button_to "ログイン", new_user_session_path, class: "btn-green me-2" %>
           <%= button_to "ゲストログイン", guest_sign_in_path, method: :post, class: "btn-green me-2" %>
-          <%= button_to "新規登録", new_user_registration_path, class: "btn-green" %>
+          <%= link_to "新規登録", new_user_registration_path, class: "btn-green" %>
         <% end %>
       </div>
     </div>
