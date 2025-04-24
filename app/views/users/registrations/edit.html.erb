@@ -1,40 +1,48 @@
-<h2>アカウント編集</h2>
+<main class="login-form-wrapper mx-auto" style="max-width: 500px; padding-top: 100px;">
+  <h1 class="text-center mb-4 fw-bold fs-2">アカウント編集</h1>
+<div class="card mx-auto p-4 mt-3" style="max-width: 500px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+    <div class="form-group">
+      <%= f.label :email, "メールアドレス", class: "form-label mt-2" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+    </div>
 
-  <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div><%= t("devise.registrations.edit.waiting_confirmation", email: resource.unconfirmed_email) %></div>
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div class="alert alert-warning mt-2">
+        <%= t("devise.registrations.edit.waiting_confirmation", email: resource.unconfirmed_email) %>
+      </div>
+    <% end %>
+
+    <div class="form-group mt-3">
+      <%= f.label :password, "新しいパスワード", class: "form-label" %>
+      <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+    </div>
+
+    <div class="form-group mt-3">
+      <%= f.label :password_confirmation, "新しいパスワード（確認用）", class: "form-label" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+    </div>
+
+    <div class="text-center mt-4">
+      <%= f.submit "更新する", class: "btn btn-success w-100" %>
+    </div>
+
   <% end %>
 
-  <div class="field">
-    <%= f.label :password, t("devise.passwords.edit.new_password") %> <i><%= t("devise.shared.minimum_password_length", count: @minimum_password_length) %></i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-    
+  <hr class="mt-5 mb-3">
+
+  <div class="text-center">
+    <h6>アカウント削除をご希望ですか？</h6>
+    <%= button_to "退会（アカウント削除）", registration_path(resource_name),
+        data: {
+          confirm: t("devise.registrations.edit.are_you_sure"),
+          turbo_confirm: t("devise.registrations.edit.cancel_confirm")
+        },
+        method: :delete,
+        class: "btn btn-outline-danger mt-2"
+    %>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, t("devise.passwords.edit.confirm_new_password") %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :current_password, t("devise.registrations.edit.current_password") %><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit t("devise.registrations.edit.update") %>
-  </div>
-<% end %>
-
-<h3><%= t("devise.registrations.edit.cancel_account") %></h3>
-
-<div><%= button_to t("devise.registrations.edit.cancel_button"), registration_path(resource_name), data: { confirm: t("devise.registrations.edit.are_you_sure"), turbo_confirm: t("devise.registrations.edit.cancel_confirm") }, method: :delete %></div>
-
-<%= link_to t("devise.shared.links.back"), :back %>
+</div>
