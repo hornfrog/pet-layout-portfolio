@@ -1,18 +1,13 @@
-.user-avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-  .profile-bottom-image {
+.bottom-image {
     position: absolute;
     bottom: 0;
     right: 0;
-    width: 250px;
+    width: 450px;
     height: auto;
     object-fit: contain;
     z-index: 0;
     pointer-events: none;
   }
+  
+
   

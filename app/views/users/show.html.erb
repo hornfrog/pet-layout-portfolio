@@ -1,19 +1,40 @@
-<h2>プロフィール</h2>
+<main class="profile-form-wrapper mx-auto" style="max-width: 700px; padding-top: 100px;">
+  <h1 class="text-center mb-4 fw-bold fs-2">プロフィール</h1>
+  <div class="container mt-5">
+    <div class="card p-4 shadow">
+      <div class="mb-3 border-bottom pb-2 d-flex align-items-center">
+        <div class="fw-bold me-3" style="min-width: 100px;">アイコン</div>
+        <div>
+          <% if @user.avatar.attached? %>
+            <%= image_tag @user.avatar, class: "user-avatar", alt: "プロフィール画像" %>
+          <% else %>
+            <%= image_tag "no-man.png",  class: "user-avatar", alt: "デフォルトプロフィール画像" %>
+          <% end %>
+        </div>
+      </div>
 
-<p>名前: <%= @user.name %></p>
-<p>自己紹介: <%= @user.profile.presence || "まだ自己紹介がありません。" %></p>
+      <div class="mb-3 border-bottom pb-2 d-flex">
+        <div class="fw-bold me-3" style="min-width: 100px;">ユーザー名</div>
+        <div><%= @user.name %></div>
+      </div>
 
-  <div>
-    <% if @user.avatar.attached? %>
-      <%= image_tag @user.avatar, id: "preview-image", class: "profile-avatar" %>
-     <% else %>
-        <%= image_tag "no-man.png", id: "preview-image", class: "profile-avatar", alt: "デフォルトプロフィール画像" %>
-    <% end %>
+      <div class="mb-3 border-bottom pb-2 d-flex">
+        <div class="fw-bold me-3" style="min-width: 100px;">プロフィール</div>
+        <div><%= @user.profile.presence || "まだ自己紹介がありません。" %></div>
+      </div>
+
+      <% if @user == current_user %>
+        <div class="text-end mt-4">
+          <%= link_to "プロフィールを編集", edit_user_path(@user), class: "btn-green me-2" %>
+          <%= link_to "投稿一覧", recipes_user_path(@user), class: "btn-green" %>
+        </div>
+      <% else %>
+        <div class="text-end mt-4">
+          <%= link_to "このユーザーの投稿一覧", recipes_user_path(@user), class: "btn-green" %>
+        </div>
+      <% end %>
+    </div>
   </div>
+  <%= image_tag("packmanf.png", class: "profile-bottom-image") %>
+</main>
 
-<% if @user == current_user %>
-  <%= link_to "プロフィールを編集", edit_user_path(@user) %>
-  <%= link_to "投稿一覧", recipes_user_path(@user), class: "btn btn-primary" %>
-<% else %>
-  <%= link_to "このユーザーの投稿一覧", recipes_user_path(@user), class: "btn btn-primary" %>
-<% end %>
