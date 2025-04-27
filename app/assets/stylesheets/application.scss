@@ -15,11 +15,27 @@
 background-color: #4f9e48;
 color: #fff;
 border: none;
+text-decoration: none;
 border-radius: 6px;
 padding: 0.5em 1em;
 
 &:hover {
     background-color: #229a3a;
+}
+}
+
+.btn-cancel{
+background-color: #ccc;
+color: #fff;          
+border: none;
+text-decoration: none;
+border-radius: 6px;
+padding: 0.65em 1em;
+transition: background-color 0.3s ease;
+
+&:hover {
+    background-color: #aaa;
+    color: #fff;           
 }
 }
 
