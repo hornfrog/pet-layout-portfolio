@@ -1,40 +1,45 @@
-<h2>プロフィール編集</h2>
+<main class="profile-form-wrapper mx-auto" style="max-width: 700px; padding-top: 100px;">
+  <h1 class="text-center mb-4 fw-bold fs-2">プロフィール編集</h1>
+  <div class="container mt-5">
+    <div class="card p-4 shadow">
+      <%= form_for @user, url: user_path(@user), method: :patch, html: { multipart: true } do |f| %>
 
-<%= form_for @user, url: user_path(@user), method: :patch, html: { multipart: true } do |f| %>
-  <div>
-    <%= f.label :name, "名前" %>
-    <%= f.text_field :name %>
-  </div>
+        <div class="mb-3 border-bottom pb-2 d-flex align-items-center">
+          <div class="fw-bold me-3" style="min-width: 100px;">アイコン</div>
+          <div>
+            <% if @user.avatar.attached? %>
+              <%= image_tag @user.avatar, id: "avatar-preview", class: "user-avatar-preview" %>
+            <% else %>
+              <%= image_tag "no-man.png", id: "avatar-preview", class: "user-avatar-preview" %>
+            <% end %>
+            <%= f.file_field :avatar, id: "avatar-input", class: "form-control mt-2" %>
 
-  <div>
-    <%= f.label :profile, "自己紹介" %>
-    <%= f.text_area :profile, rows: 3 %>
-  </div>
+            <% if @user.avatar.attached? %>
+              <div class="form-check mt-2">
+                <%= f.check_box :remove_avatar, class: "form-check-input", id: "remove-avatar" %>
+                <%= f.label :remove_avatar, "プロフィール画像を未設定にする", class: "form-check-label" %>
+              </div>
+            <% end %>
+          </div>
+        </div>
 
-  <div>
-    <%= f.label :avatar, "プロフィール画像" %>
-    
-    <div>
-      <% if @user.avatar.attached? %>
-        <%= image_tag @user.avatar, id: "avatar-preview", class: "profile-avatar" %>
-      <% else %>
-        <%= image_tag "no-image.png", id: "avatar-preview", class: "profile-avatar", alt: "デフォルトプロフィール画像" %>
+        <div class="mb-3 border-bottom pb-2 d-flex">
+          <div class="fw-bold me-3" style="min-width: 100px;">ユーザー名</div>
+          <div><%= f.text_field :name, class: "form-control" %></div>
+        </div>
+
+        <div class="mb-3 border-bottom pb-2 d-flex">
+          <div class="fw-bold me-3" style="min-width: 100px;">プロフィール</div>
+          <div><%= f.text_area :profile, class: "form-control profile-textarea" %></div>
+        </div>
+
+        <div class="text-end mt-4">
+          <%= f.submit "更新する", class: "btn-green me-2" %>
+          <%= link_to "キャンセル", user_path(@user), class: "btn-cancel" %>
+        </div>
+
       <% end %>
     </div>
-
-    <%= f.file_field :avatar, id: "avatar-input" %>
-
-    <% if @user.avatar.attached? %>
-      <div>
-        <%= f.check_box :remove_avatar, { class: "remove-avatar" } %>
-        <%= f.label :remove_avatar, "画像を削除" %>
-      </div>
-    <% end %>
   </div>
-
-  <div>
-    <%= f.submit "更新する" %>
-  </div>
-<% end %>
-
-<%= link_to "戻る", user_path %>
+  <%= image_tag("packmanf.png", class: "profile-bottom-image") %>
+</main>

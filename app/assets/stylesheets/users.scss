@@ -5,6 +5,25 @@
   object-fit: cover;
 }
 
+.user-avatar-preview {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+
+.profile-textarea {
+  width: 500px;
+  height: 200px;
+  max-height: 400px;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  resize: vertical;
+}
+
   .profile-bottom-image {
     position: absolute;
     bottom: 0;
