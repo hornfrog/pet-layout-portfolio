@@ -1,5 +1,5 @@
 <main class="profile-form-wrapper mx-auto" style="max-width: 700px; padding-top: 100px;">
-  <h1 class="text-center mb-4 fw-bold fs-2">プロフィール</h1>
+<h1 class="page-title mb-4 fs-2">プロフィール</h1>
   <div class="container mt-5">
     <div class="card p-4 shadow">
       <div class="mb-3 border-bottom pb-2 d-flex align-items-center">
@@ -26,7 +26,7 @@
       <% if @user == current_user %>
         <div class="text-end mt-4">
           <%= link_to "プロフィールを編集", edit_user_path(@user), class: "btn-green me-2" %>
-          <%= link_to "投稿一覧", recipes_user_path(@user), class: "btn-green" %>
+          <%= link_to "マイレイアウト", recipes_user_path(@user), class: "btn-green" %>
         </div>
       <% else %>
         <div class="text-end mt-4">
