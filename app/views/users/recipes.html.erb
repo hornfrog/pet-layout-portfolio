@@ -1,24 +1,56 @@
-<h1><%= link_to "#{@user.name}", user_path(@user) %>さんの投稿レシピ</h1>
-<p>投稿数: <%= @recipe_count %> 件</p>
+<main class="users-recipes-form-wrapper mx-auto" style="max-width: 700px; padding-top: 100px;">
+  <% if current_user == @user %>
+    <h1 class="page-title mb-4 fs-2">マイレイアウト</h1>
+  <% else %>
+    <h1 class="page-title mb-4 fs-2"><%= @user.name %>さんの投稿一覧</h1>
+  <% end %>
+
+<div class="user-recipes-header">
+<p class="user-header">
+<%= link_to "#{@user.name}", user_path(@user), class: "user-link" %>さんの投稿レイアウト
+</p>
+<p class="post-count">投稿数: <%= @recipes.count %>件</p>
+</div>
 
 <% if @recipes.any? %>
-  <ul>
+  <ul class="users-recipes-list">
     <% @recipes.each do |recipe| %>
-      <li>
-        <%= link_to recipe.title, recipe_path(recipe) %>
-        
-        <% if recipe.image.attached? %>
-          <%= image_tag url_for(recipe.image), alt: recipe.title, class: "recipe-image" %>
-        <% else %>
-          <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "recipe-image" %>
-        <% end %>
-        <p>投稿日: <%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %></p>
-        <%= render "recipes/like_button", recipe: recipe %>
-        <%= render "recipes/favorite_button", recipe: recipe %>
+      <li class="users-recipe-card">
+        <div class="users-recipe-card-inner">
+          <div class="users-recipe-image-wrapper">
+          <% if recipe.image.attached? %>
+            <%= link_to recipe_path(recipe) do %>
+              <%= image_tag url_for(recipe.image), alt: recipe.title, class: "users-recipe-image" %>
+            <% end %>
+          <% else %>
+            <%= link_to recipe_path(recipe) do %>
+              <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "users-recipe-image" %>
+            <% end %>
+          <% end %>
+          </div>
+
+          <div class="users-recipe-content">
+            <%= link_to recipe.title, recipe_path(recipe), class: "users-recipe-title" %>
+            <p class="users-recipe-date">投稿日: <%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+
+            <div class="users-recipe-actions">
+              <div class="users-recipe-like">
+                <%= render "recipes/like_button", recipe: recipe %>
+              </div>
+            <% if current_user == recipe.user %>
+              <div class="users-recipe-edit-delete">
+                <%= link_to '編集', edit_recipe_path(recipe), class: "edit-link" %>
+                <%= link_to '削除', recipe_path(recipe), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "delete-link" %>
+              </div>
+            <% end %>
+            </div>
+          </div>
+        </div>
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p>まだレシピを投稿していません。</p>
+  <p class="no-recipes-message">まだレシピを投稿していません。</p>
 <% end %>
-
+<%= image_tag("ham.png", class: "users-recipepage-image") %>
+</main>

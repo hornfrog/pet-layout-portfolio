@@ -46,7 +46,7 @@
               <% unless current_user.guest? %>
                 <li><%= link_to "アカウント情報", account_path, class: "dropdown-item" %></li>
                 <li><%= link_to "プロフィール", current_user, class: "dropdown-item" %></li>
-                <li><%= link_to "投稿一覧", recipes_user_path(current_user), class: "dropdown-item" %></li>
+                <li><%= link_to "マイレイアウト", recipes_user_path(current_user), class: "dropdown-item" %></li>
                 <li><%= link_to "お気に入り一覧", favorites_path, class: "dropdown-item" %></li>
                 <li><hr class="dropdown-divider"></li>
               <% end %>

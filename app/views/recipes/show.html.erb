@@ -1,4 +1,4 @@
-<h1><%= @recipe.title %></h1>
+<h1 class="page-title mb-4 fs-2"><%= @recipe.title %></h1>
 <p><strong><%= @recipe.user.name %></strong></p>
 <p><strong>カテゴリ:</strong> <%= @recipe.category_hierarchy.map(&:name).join(">") %></p>
 

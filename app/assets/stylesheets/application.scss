@@ -9,6 +9,11 @@
  @import "sort_tabs"; 
  @import "users";
  @import "registrations";
+ @import "users_recipes";
+
+ .page-title {
+  text-align: center;
+ }
 
  .btn-green,
  a.btn-green {

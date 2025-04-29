@@ -1,5 +1,5 @@
 <main class="profile-form-wrapper mx-auto" style="max-width: 700px; padding-top: 100px;">
-  <h1 class="text-center mb-4 fw-bold fs-2">プロフィール編集</h1>
+<h1 class="page-title mb-4 fs-2">プロフィール編集</h1>
   <div class="container mt-5">
     <div class="card p-4 shadow">
       <%= form_for @user, url: user_path(@user), method: :patch, html: { multipart: true } do |f| %>
