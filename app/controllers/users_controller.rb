@@ -13,8 +13,7 @@ class UsersController < ApplicationController
 
   def update
     @user = current_user
-
-    @user.avatar.purge if params[:user][:remove_avatar] == "1"
+    purge_avatar_if_requested
 
     if @user.update(user_params)
       flash[:notice] = I18n.t('notices.profile_updated')
@@ -38,5 +37,11 @@ class UsersController < ApplicationController
 
   def correct_user
     redirect_to root_path unless current_user == User.find(params[:id])
+  end
+
+  def purge_avatar_if_requested
+    return unless params[:user][:remove_avatar] == "true" && params[:user][:avatar].blank?
+
+    @user.avatar.purge
   end
 end

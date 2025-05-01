@@ -1,11 +1,13 @@
 <div class="col recipe-card">
   <div class="card shadow-sm">
     <%= link_to recipe_path(recipe) do %>
-      <% if recipe.image.attached? %>
+      <% if recipe.images.attached? %>
+        <%= image_tag url_for(recipe.images.first), alt: recipe.title, class: "card-img-top" %>
+      <% elsif recipe.image&.attached? %>
         <%= image_tag url_for(recipe.image), alt: recipe.title, class: "card-img-top" %>
       <% else %>
         <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "card-img-top" %>
-      <% end %>
+     <% end %>
     <% end %>
 
     <div class="card-body">
