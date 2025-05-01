@@ -13,6 +13,21 @@
   border: 2px solid #ccc;
 }
 
+.profile-btn-cancel {
+  background-color: #ccc;
+  color: #fff;          
+  border: none;
+  text-decoration: none;
+  border-radius: 6px;
+  padding: 0.1em 1em;
+  transition: background-color 0.3s ease;
+
+&:hover {
+    background-color: #aaa;
+    color: #fff;           
+}
+}
+
 .profile-textarea {
   width: 500px;
   height: 200px;

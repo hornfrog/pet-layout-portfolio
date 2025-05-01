@@ -58,7 +58,11 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe.destroy
-    redirect_to recipes_path, notice: I18n.t('notices.recipe_deleted')
+    if request.referer&.include?(recipe_path(@recipe.id))
+      redirect_to recipes_path, notice: I18n.t('notices.recipe_deleted')
+    else
+      redirect_to request.referer || recipes_path, notice: I18n.t('notices.recipe_deleted')
+    end
   end
 
   def render_recipes_json
@@ -78,6 +82,6 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:title, :description, :category_id, :child_category_id, :grandchild_category_id, :image)
+    params.require(:recipe).permit(:title, :description, :category_id, :child_category_id, :grandchild_category_id, images: [])
   end
 end
