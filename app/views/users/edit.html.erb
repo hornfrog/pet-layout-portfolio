@@ -15,11 +15,12 @@
             <%= f.file_field :avatar, id: "avatar-input", class: "form-control mt-2" %>
 
             <% if @user.avatar.attached? %>
-              <div class="form-check mt-2">
-                <%= f.check_box :remove_avatar, class: "form-check-input", id: "remove-avatar" %>
-                <%= f.label :remove_avatar, "プロフィール画像を未設定にする", class: "form-check-label" %>
-              </div>
+              <%= f.hidden_field :remove_avatar, value: false, id: "remove-avatar-hidden" %>
+              <button type="button" id="remove-avatar-btn" class="profile-btn-cancel mt-2">
+                削除
+              </button>
             <% end %>
+
           </div>
         </div>
 
