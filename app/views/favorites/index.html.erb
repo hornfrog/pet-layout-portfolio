@@ -19,15 +19,11 @@
               <%= link_to recipe_path(recipe) do %>
                 <%= image_tag url_for(recipe.images.first), alt: recipe.title, class: "users-recipe-image" %>
               <% end %>
-            <% elsif recipe.image&.attached? %>
-              <%= link_to recipe_path(recipe) do %>
-                <%= image_tag url_for(recipe.image), alt: recipe.title, class: "users-recipe-image" %>
-              <% end %>
             <% else %>
               <%= link_to recipe_path(recipe) do %>
                 <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "users-recipe-image" %>
               <% end %>
-            <% end %>
+            <% end %>        
           </div>
 
           <div class="users-recipe-content">
