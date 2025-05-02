@@ -18,20 +18,16 @@
       <li class="users-recipe-card">
         <div class="users-recipe-card-inner">
           <div class="users-recipe-image-wrapper">
-          <% if recipe.images.attached? %>
-            <%= link_to recipe_path(recipe) do %>
-              <%= image_tag url_for(recipe.images.first), alt: recipe.title, class: "users-recipe-image" %>
+            <% if recipe.images.attached? %>
+              <%= link_to recipe_path(recipe) do %>
+                <%= image_tag url_for(recipe.images.first), alt: recipe.title, class: "users-recipe-image" %>
+              <% end %>
+            <% else %>
+              <%= link_to recipe_path(recipe) do %>
+                <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "users-recipe-image" %>
+              <% end %>
             <% end %>
-          <% elsif recipe.image&.attached? %>
-            <%= link_to recipe_path(recipe) do %>
-              <%= image_tag url_for(recipe.image), alt: recipe.title, class: "users-recipe-image" %>
-            <% end %>
-          <% else %>
-            <%= link_to recipe_path(recipe) do %>
-              <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "users-recipe-image" %>
-            <% end %>
-          <% end %>
-        </div>
+          </div>
           <div class="users-recipe-content">
             <%= link_to recipe.title, recipe_path(recipe), class: "users-recipe-title" %>
             <p class="users-recipe-date">投稿日: <%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %></p>
