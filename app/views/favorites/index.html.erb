@@ -1,22 +1,59 @@
-<h1>お気に入りレシピ一覧</h1>
+<<main class="users-recipes-form-wrapper mx-auto" style="max-width: 700px; padding-top: 100px;">
+<h1 class="page-title mb-4 fs-2">お気に入りレイアウト一覧</h1>
+
+<div class="user-recipes-header">
+  <p class="user-header">
+    <%= link_to "#{current_user.name}", user_path(current_user), class: "user-link" %>さんのお気に入りレイアウト
+  </p>
+  <p class="favorites-count">お気に入り数: <%= @favorite_count %>件</p>
+</div>
 
 <% if @favorites.any? %>
-  <ul>
+  <ul class="users-recipes-list">
     <% @favorites.each do |favorite| %>
-      <li>
-        <%= link_to favorite.recipe.title, recipe_path(favorite.recipe) %>
-        
-        <% if favorite.recipe.image.attached? %>
-          <%= image_tag url_for(favorite.recipe.image), alt: favorite.recipe.title, class: "recipe-image" %>
-        <% else %> 
-          <%= image_tag asset_path('no-image.png'), alt: favorite.recipe.title, class: "recipe-image" %>
-        <% end %>
+      <% recipe = favorite.recipe %>
+      <li class="users-recipe-card">
+        <div class="users-recipe-card-inner">
+          <div class="users-recipe-image-wrapper">
+            <% if recipe.images.attached? %>
+              <%= link_to recipe_path(recipe) do %>
+                <%= image_tag url_for(recipe.images.first), alt: recipe.title, class: "users-recipe-image" %>
+              <% end %>
+            <% elsif recipe.image&.attached? %>
+              <%= link_to recipe_path(recipe) do %>
+                <%= image_tag url_for(recipe.image), alt: recipe.title, class: "users-recipe-image" %>
+              <% end %>
+            <% else %>
+              <%= link_to recipe_path(recipe) do %>
+                <%= image_tag asset_path('no-image.png'), alt: recipe.title, class: "users-recipe-image" %>
+              <% end %>
+            <% end %>
+          </div>
 
-        <%= render "recipes/like_button", recipe: favorite.recipe %>
-        <%= render "recipes/favorite_button", recipe: favorite.recipe %>
+          <div class="users-recipe-content">
+            <%= link_to recipe.title, recipe_path(recipe), class: "users-recipe-title" %>
+            <p class="users-recipe-date">投稿日: <%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+
+            <p class="user-link">
+              投稿者: <%= link_to recipe.user.name, user_path(recipe.user), class: "user-link" %>
+            </p>
+
+            <div class="users-recipe-actions">
+              <div class="users-recipe-like">
+                <%= render "recipes/like_button", recipe: recipe %>
+              </div>
+              <div class="users-recipe-favorite">
+                <%= render "recipes/favorite_button", recipe: recipe %>
+              </div>
+            </div>
+          </div>
+        </div>
       </li>
     <% end %>
   </ul>
 <% else %>
-  <p>お気に入りのレシピはありません。</p>
+  <p class="no-recipes-message">お気に入りのレイアウトはありません。</p>
 <% end %>
+
+<%= image_tag("ham.png", class: "users-recipepage-image") %>
+</main>
