@@ -31,11 +31,22 @@
   <div>
     <%= f.label :image, "画像" %>
     <div id="image-preview">
-      <% if @recipe.image.attached? %>
-        <%= image_tag url_for(@recipe.image), id: "preview-image", width: "300", height: "300" %>
-      <% else %>
-        <img id="preview-image" src="<%= asset_path('no-image.png') %>" alt="プレビュー画像" style="width: 300px; height: 300px;">
+    <% if @recipe.images.attached? %>
+    <div id="image-preview-container">
+      <% @recipe.images.each do |image| %>
+        <div style="display: inline-block; margin-right: 10px; position: relative;">
+          <%= image_tag url_for(image), width: "150", height: "150", style: "object-fit: cover; border-radius: 8px;" %>
+          <!-- 画像削除ボタン（後述） -->
+          <%= check_box_tag "remove_images[]", image.id %>
+        </div>
       <% end %>
+    </div>
+  <% else %>
+    <div id="image-preview-container">
+      <img id="preview-image" src="<%= asset_path('no-image.png') %>" alt="プレビュー画像" style="width: 150px; height: 150px;">
+    </div>
+  <% end %>
+  
     </div>
 
     <div>

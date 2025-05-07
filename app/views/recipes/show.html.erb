@@ -1,45 +1,81 @@
-<h1 class="page-title mb-4 fs-2"><%= @recipe.title %></h1>
-<p><strong><%= @recipe.user.name %></strong></p>
-<p><strong>カテゴリ:</strong> <%= @recipe.category_hierarchy.map(&:name).join(">") %></p>
+<div class="container my-4 pt-5">
 
-<% if @recipe.images.attached? %>
-  <div id="recipeCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
-    <div class="carousel-inner">
-      <% @recipe.images.each_with_index do |image, index| %>
-        <div class="carousel-item <%= 'active' if index == 0 %>">
-          <%= image_tag url_for(image), class: "d-block w-100", style: "max-height: 400px; object-fit: contain;" %>
-        </div>
+  <h1 class="fs-2 mb-2 mt-4"><%= @recipe.title %></h1>
+
+  <div class="d-flex align-items-center mb-2">
+    <% if @recipe.user.avatar.attached? %>
+      <%= image_tag @recipe.user.avatar, class: "user-avatar", alt: "投稿者アイコン" %>
+    <% else %>
+      <%= image_tag "no-man.png", class: "user-avatar", alt: "デフォルトアイコン" %>
+    <% end %>
+    <%= link_to @recipe.user.name, user_path(@recipe.user), class: "text-decoration-none fw-bold" %>
+  </div>
+
+  <p class="text-muted mb-3">
+    <small>投稿: <%= @recipe.created_at.strftime('%Y年%m月%d日 %H:%M') %></small><br>
+    <small>更新: <%= @recipe.updated_at.strftime('%Y-%m-%d') %></small>
+  </p>
+
+  <% if @recipe.images.attached? %>
+    <div id="recipeCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+
+      <div class="carousel-indicators">
+        <% @recipe.images.each_with_index do |_, index| %>
+          <button type="button"
+                  data-bs-target="#recipeCarousel"
+                  data-bs-slide-to="<%= index %>"
+                  class="<%= 'active' if index == 0 %>"
+                  aria-current="<%= 'true' if index == 0 %>"
+                  aria-label="スライド <%= index + 1 %>">
+          </button>
+        <% end %>
+      </div>
+
+      <div class="carousel-inner">
+        <% @recipe.images.each_with_index do |image, index| %>
+          <div class="carousel-item <%= 'active' if index == 0 %>">
+            <%= image_tag url_for(image), class: "d-block mx-auto", style: "max-height: 500px; width: auto; object-fit: contain;" %>
+          </div>
+        <% end %>
+      </div>
+
+      <% if @recipe.images.length > 1 %>
+        <button class="carousel-control-prev" type="button" data-bs-target="#recipeCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">前へ</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#recipeCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">次へ</span>
+        </button>
       <% end %>
+
+    </div>
+  <% else %>
+    <%= image_tag asset_path('no-image.png'), class: "d-block mx-auto", style: "max-height: 500px;" %>
+  <% end %>
+
+  <div class="label-description-box">
+    <div class="label">説明</div>
+    <div class="description"><%= @recipe.description %></div>
+  </div>
+
+  <div class="action-buttons mt-4">
+
+    <div class="d-flex justify-content-start mb-3 gap-2">
+      <%= render "recipes/like_button", recipe: @recipe %>
+      <%= render "recipes/favorite_button", recipe: @recipe %>
     </div>
 
-    <% if @recipe.images.length > 1 %>
-      <button class="carousel-control-prev" type="button" data-bs-target="#recipeCarousel" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">前へ</span>
-      </button>
-      <button class="carousel-control-next" type="button" data-bs-target="#recipeCarousel" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">次へ</span>
-      </button>
+    <% if current_user && current_user == @recipe.user && !current_user.guest? %>
+      <div class="d-flex justify-content-start mb-3 gap-2">
+        <%= link_to "編集", edit_recipe_path(@recipe), class: "btn-green" %>
+        <%= link_to "削除", recipe_path(@recipe), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn-cancel" %>
+      </div>
     <% end %>
+
+    <div>
+      <%= link_to "← 戻る", recipes_path, class: "btn btn-secondary" %>
+    </div>
   </div>
-<% elsif @recipe.image&.attached? %>
-  <%= image_tag url_for(@recipe.image), width: "300", height: "300" %>
-<% else %>
-  <%= image_tag asset_path('no-image.png'), width: "300", height: "300" %>
-<% end %>
-
-
-<p><strong>説明:</strong> <%= @recipe.description %></p>
-
-<div class="button-wrapper">
-    <%= render "recipes/like_button", recipe: @recipe %>
-    <%= render 'recipes/favorite_button', recipe: @recipe %>
 </div>
-
-<% if current_user && @recipe.user&.id == current_user.id %>
-  <%= link_to "編集", edit_recipe_path(@recipe) %>
-  <%= link_to "削除", recipe_path(@recipe), method: :delete, data: { confirm: "本当に削除しますか？" } %>
-<% end %>
-
-<br><%= link_to "戻る", recipes_path %></br>
