@@ -2,19 +2,37 @@ document.addEventListener("DOMContentLoaded", function () {
   function setupMultipleImagePreview(inputId, containerId, maxCount = 5) {
     const input = document.getElementById(inputId);
     const container = document.getElementById(containerId);
+    const removedImagesContainer = document.getElementById("removed-images-container");
     let imageFiles = [];
 
     if (!input || !container) return;
 
+    container.addEventListener("click", function (event) {
+      if (event.target.classList.contains("remove-image-btn")) {
+        const wrapper = event.target.closest(".image-wrapper");
+        const imageId = wrapper.dataset.imageId;
+
+        if (imageId) {
+          wrapper.remove();
+          const hiddenField = document.createElement("input");
+          hiddenField.type = "hidden";
+          hiddenField.name = "removed_image_ids[]";
+          hiddenField.value = imageId;
+          removedImagesContainer.appendChild(hiddenField);
+        }
+      }
+    });
+
     input.addEventListener("change", function (event) {
+      const existingCount = container.querySelectorAll(".image-wrapper[data-image-id]").length;
       const newFiles = Array.from(event.target.files);
 
-      if (imageFiles.length >= maxCount) {
-        alert(`画像は最大 ${maxCount} 枚まで選択できます。`);
-        return;
-      }
+      const allowableCount = maxCount - existingCount - imageFiles.length;
+      const allowableFiles = newFiles.slice(0, allowableCount);
 
-      const allowableFiles = newFiles.slice(0, maxCount - imageFiles.length);
+      if (newFiles.length > allowableFiles.length) {
+        alert(`画像は最大 ${maxCount} 枚まで選択できます。`);
+      }
 
       allowableFiles.forEach((file) => {
         const reader = new FileReader();
@@ -33,6 +51,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           const removeBtn = document.createElement("button");
           removeBtn.textContent = "×";
+          removeBtn.classList.add("remove-image-btn");
           removeBtn.style.position = "absolute";
           removeBtn.style.top = "2px";
           removeBtn.style.right = "2px";
@@ -45,12 +64,6 @@ document.addEventListener("DOMContentLoaded", function () {
           removeBtn.style.height = "24px";
           removeBtn.style.fontSize = "16px";
 
-          removeBtn.addEventListener("click", () => {
-            container.removeChild(wrapper);
-            imageFiles = imageFiles.filter((f) => f !== file);
-            updateInputFiles();
-          });
-
           wrapper.appendChild(img);
           wrapper.appendChild(removeBtn);
           container.appendChild(wrapper);
@@ -60,7 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
       });
 
       updateInputFiles();
-      
     });
 
     function updateInputFiles() {

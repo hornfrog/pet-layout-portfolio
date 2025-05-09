@@ -1,67 +1,58 @@
-<h1>レシピを編集</h1>
+<main class="mx-auto" style="max-width: 900px; padding-top: 100px;">
+  <h1 class="page-title fs-2 mb-2 border-bottom pb-2">レイアウト編集</h1>
+  <p class="mb-4">レイアウトの内容を編集できます</p>
 
-<%= form_with model: @recipe, local: true do |f| %>
+  <div class="card p-4 shadow">
+  <%= form_with model: @recipe, local: true, html: { multipart: true } do |f| %>
 
-  <div>
-  <%= f.label :category_id, "カテゴリ" %>
-  <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "選択してください" }, { id: "parent_category", data: { selected: @recipe.category_id } } %>
-</div>
-
-<div>
-  <%= f.label :child_category_id, "カテゴリ" %>
-  <%= f.select :child_category_id, [], { prompt: "選択してください" }, { id: "child_category", data: { selected: @recipe.child_category_id } } %>
-</div>
-
-<div>
-  <%= f.label :grandchild_category_id, "カテゴリ" %>
-  <%= f.select :grandchild_category_id, [], { prompt: "選択してください" }, { id: "grandchild_category", data: { selected: @recipe.grandchild_category_id } } %>
-</div>
-
-
-  <div>
-    <%= f.label :title, "タイトル" %>
-    <%= f.text_field :title, value: @recipe.title %>
-  </div>
-
-  <div>
-    <%= f.label :description, "説明" %>
-    <%= f.text_area :description, value: @recipe.description %>
-  </div>
-
-  <div>
-    <%= f.label :image, "画像" %>
-    <div id="image-preview">
-    <% if @recipe.images.attached? %>
-    <div id="image-preview-container">
-      <% @recipe.images.each do |image| %>
-        <div style="display: inline-block; margin-right: 10px; position: relative;">
-          <%= image_tag url_for(image), width: "150", height: "150", style: "object-fit: cover; border-radius: 8px;" %>
-          <!-- 画像削除ボタン（後述） -->
-          <%= check_box_tag "remove_images[]", image.id %>
-        </div>
-      <% end %>
+    <div class="mb-3 border-bottom pb-3 d-flex">
+      <label class="fw-bold me-3" style="min-width: 100px;">タイトル</label>
+      <div class="form-area-wide">
+        <%= f.text_field :title, class: "form-control" %>
+        <small class="text-danger">※必須（30文字まで）</small>
+      </div>
     </div>
-  <% else %>
-    <div id="image-preview-container">
-      <img id="preview-image" src="<%= asset_path('no-image.png') %>" alt="プレビュー画像" style="width: 150px; height: 150px;">
+
+    <div class="mb-3 border-bottom pb-3 d-flex">
+      <label class="fw-bold me-3" style="min-width: 100px;">カテゴリ</label>
+      <div class="d-flex gap-2 flex-wrap w-100">
+        <%= f.collection_select :category_id, @categories.where(parent_id: nil), :id, :name,
+              { prompt: "カテゴリ" },
+              { id: "parent_category", class: "form-select", data: { selected: @recipe.category_id } } %>
+
+        <%= f.select :child_category_id, [], { prompt: "カテゴリ" }, { id: "child_category", class: "form-select", data: { selected: @recipe.child_category_id } } %>
+
+        <%= f.select :grandchild_category_id, [], { prompt: "カテゴリ" }, { id: "grandchild_category", class: "form-select", data: { selected: @recipe.grandchild_category_id } } %>
+      </div>
+    </div>
+
+    <div class="mb-3 border-bottom pb-3 d-flex">
+      <label class="fw-bold me-3" style="min-width: 100px;">画像<p>(5枚まで)</p></label>
+      <div class="w-100">
+      <%= f.file_field :images, multiple: true, accept: 'image/*', id: "image-input", data: { existing_count: @recipe.images.size } %>
+        <div id="image-preview-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+          <% @recipe.images.each do |image| %>
+            <div class="image-wrapper" data-image-id="<%= image.id %>" style="position: relative;">
+              <%= image_tag url_for(image), style: "width: 150px; height: 150px; object-fit: cover; border-radius: 8px;" %>
+              <button type="button" class="remove-image-btn" style="position: absolute; top: 2px; right: 2px; background: rgba(0,0,0,0.5); color: #fff; border: none; border-radius: 50%; cursor: pointer; width: 24px; height: 24px;">×</button>
+            </div>
+          <% end %>
+        </div>
+        <div id="removed-images-container"></div>
+      </div>
+    </div>
+
+    <div class="mb-3 border-bottom pb-3 d-flex">
+      <label class="fw-bold me-3" style="min-width: 100px;">内容</label>
+      <div class="form-area-description">
+        <%= f.text_area :description, class: "form-control", rows: 6 %>
+        <small class="text-danger">※必須（500文字まで）</small>
+      </div>
+    </div>
+
+    <div class="mt-4">
+      <%= f.submit "更新する", class: "submit-button w-100" %>
     </div>
   <% end %>
-  
-    </div>
-
-    <div>
-      <%= check_box_tag "remove_image" %>
-      <%= label_tag "remove_image", "画像を削除する" %>
-    </div>
-
-    <%= f.file_field :image, id: "image-input" %>
   </div>
-
-
-  <div>
-    <%= f.submit "更新する" %>
-  </div>
-
-<% end %>
-
-<%= link_to "戻る", recipes_path %>
+</main>
