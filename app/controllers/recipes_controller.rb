@@ -47,9 +47,10 @@ class RecipesController < ApplicationController
   end
 
   def update
-    @recipe.image.purge if params[:remove_image] == "1"
+    purge_removed_images if params[:removed_image_ids].present?
 
-    if @recipe.update(recipe_params)
+    if @recipe.update(recipe_params.except(:images))
+      attach_new_images
       redirect_to @recipe, notice: I18n.t('notices.recipe_updated')
     else
       render :edit
@@ -83,5 +84,16 @@ class RecipesController < ApplicationController
 
   def recipe_params
     params.require(:recipe).permit(:title, :description, :category_id, :child_category_id, :grandchild_category_id, images: [])
+  end
+
+  def purge_removed_images
+    params[:removed_image_ids].each do |id|
+      image = @recipe.images.find_by(id: id)
+      image&.purge
+    end
+  end
+
+  def attach_new_images
+    @recipe.images.attach(recipe_params[:images]) if recipe_params[:images]
   end
 end
