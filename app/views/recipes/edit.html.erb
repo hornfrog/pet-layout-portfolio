@@ -16,13 +16,19 @@
     <div class="mb-3 border-bottom pb-3 d-flex">
       <label class="fw-bold me-3" style="min-width: 100px;">カテゴリ</label>
       <div class="d-flex gap-2 flex-wrap w-100">
-        <%= f.collection_select :category_id, @categories.where(parent_id: nil), :id, :name,
-              { prompt: "カテゴリ" },
-              { id: "parent_category", class: "form-select", data: { selected: @recipe.category_id } } %>
+      <%= f.collection_select :category_id, @categories, :id, :name,
+      { prompt: "カテゴリ", selected: @parent_category&.id },
+      { id: "parent_category", class: "form-select" } %>
 
-        <%= f.select :child_category_id, [], { prompt: "カテゴリ" }, { id: "child_category", class: "form-select", data: { selected: @recipe.child_category_id } } %>
+      <%= f.select :child_category_id,
+        options_from_collection_for_select(@child_categories, :id, :name, @child_category&.id),
+        { prompt: "カテゴリ" },
+        { id: "child_category", class: "form-select", data: { selected: @child_category&.id } } %>
 
-        <%= f.select :grandchild_category_id, [], { prompt: "カテゴリ" }, { id: "grandchild_category", class: "form-select", data: { selected: @recipe.grandchild_category_id } } %>
+      <%= f.select :grandchild_category_id,
+        options_from_collection_for_select(@grandchild_categories, :id, :name, @grandchild_category&.id),
+        { prompt: "カテゴリ" },
+        { id: "grandchild_category", class: "form-select", data: { selected: @grandchild_category&.id } } %>
       </div>
     </div>
 

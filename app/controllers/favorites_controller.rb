@@ -4,6 +4,8 @@ class FavoritesController < ApplicationController
   before_action :reject_guest_user, only: [:create, :destroy]
 
   def index
+    add_breadcrumb("お気に入り一覧")
+
     @favorites = current_user.favorites.includes(recipe: :user).order(created_at: :desc)
     @favorite_count = @favorites.count
   end

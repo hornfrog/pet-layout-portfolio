@@ -5,14 +5,16 @@ class Category < ApplicationRecord
   has_many :recipes, dependent: :destroy
 
   def self_and_descendants_ids
-    [id] + descendant_ids
+    [id] + Category.where(parent_id: id).flat_map do |child|
+      [child.id] + child.self_and_descendants_ids
+    end
   end
 
   def self_and_ancestors
-    ancestors = []
+    ancestors = [self]
     current = self
-    ancestors << current while (current = current.parent)
-    ancestors.reverse
+    ancestors.unshift(current = current.parent) while current&.parent
+    ancestors.compact
   end
 
   def descendant_ids

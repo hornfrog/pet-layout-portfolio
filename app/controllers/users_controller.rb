@@ -4,10 +4,15 @@ class UsersController < ApplicationController
   before_action :correct_user, only: [:edit, :update]
 
   def show
+    add_breadcrumb("プロフィール")
+
     @user = User.find(params[:id])
   end
 
   def edit
+    add_breadcrumb("プロフィール", current_user)
+    add_breadcrumb("プロフィール編集")
+
     @user = current_user
   end
 
@@ -24,6 +29,8 @@ class UsersController < ApplicationController
   end
 
   def recipes
+    add_breadcrumb("マイレイアウト")
+
     @user = User.find(params[:id])
     @recipes = @user.recipes
     @recipe_count = @recipes.count

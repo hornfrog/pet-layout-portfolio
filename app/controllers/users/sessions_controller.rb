@@ -4,6 +4,7 @@ module Users
   #   Users::SessionsController.new.guest_sign_in
   class SessionsController < Devise::SessionsController
     def new
+      add_breadcrumb("ログイン")
       flash.clear
       super
     end

@@ -3,41 +3,44 @@ class RecipesController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_recipe, only: [:edit, :update, :destroy, :show]
   before_action :authorize_user!, only: [:edit, :update, :destroy]
+  before_action :set_category_id_from_params, only: [:create, :update]
 
   def index
+    add_breadcrumb("レイアウト一覧", recipes_path)
     @parent_categories = Category.where(parent_id: nil)
-    @recipes = Recipes::Fetcher.new(params: params).call
-    @total_recipes_count = @recipes.except(:group).reorder(nil).count
 
-    respond_to do |format|
-      format.html
-      format.json { render_recipes_json }
-    end
+    fetch_recipes_with_total_count
+    respond_to_format
   end
 
   def search
-    @recipes = Recipes::Fetcher.new(params: params).call
-    @total_recipes_count = @recipes.except(:group).reorder(nil).count
+    add_breadcrumb("レイアウト一覧", recipes_path)
+    add_breadcrumb("検索結果")
 
-    respond_to do |format|
-      format.html
-      format.json { render_recipes_json }
-    end
+    fetch_recipes_with_total_count
+    respond_to_format
   end
 
   def show
+    add_breadcrumbs_for(@recipe)
     @categories = Category.where(parent_id: nil)
   end
 
   def new
+    add_breadcrumb("新規投稿")
     @recipe = Recipe.new
     @categories = Category.includes(:subcategories).where(parent_id: nil)
   end
 
-  def edit; end
+  def edit
+    add_breadcrumb(@recipe.title, recipe_path(@recipe))
+    add_breadcrumb("編集")
+
+    @categories = Category.includes(:subcategories).where(parent_id: nil)
+    setup_edit_categories(@recipe.category)
+  end
 
   def create
-    @recipe = current_user.recipes.build(recipe_params)
     if @recipe.save
       redirect_to @recipe, notice: I18n.t('notices.recipe_created')
     else
@@ -47,9 +50,9 @@ class RecipesController < ApplicationController
   end
 
   def update
-    purge_removed_images if params[:removed_image_ids].present?
+    purge_removed_images if removing_images?
 
-    if @recipe.update(recipe_params.except(:images))
+    if @recipe.save
       attach_new_images
       redirect_to @recipe, notice: I18n.t('notices.recipe_updated')
     else
@@ -59,11 +62,10 @@ class RecipesController < ApplicationController
 
   def destroy
     @recipe.destroy
-    if request.referer&.include?(recipe_path(@recipe.id))
-      redirect_to recipes_path, notice: I18n.t('notices.recipe_deleted')
-    else
-      redirect_to request.referer || recipes_path, notice: I18n.t('notices.recipe_deleted')
-    end
+    redirect_to(
+      request.referer&.include?(recipe_path(@recipe.id)) ? recipes_path : request.referer || recipes_path,
+      notice: I18n.t('notices.recipe_deleted')
+    )
   end
 
   def render_recipes_json
@@ -74,6 +76,35 @@ class RecipesController < ApplicationController
 
   private
 
+  def fetch_recipes_with_total_count
+    @recipes = Recipes::Fetcher.new(params: params).call
+    @total_recipes_count = @recipes.except(:group).reorder(nil).count
+  end
+
+  def respond_to_format
+    respond_to do |format|
+      format.html
+      format.json { render_recipes_json }
+    end
+  end
+
+  def set_category_id_from_params
+    category_id =
+      params.dig(:recipe, :grandchild_category_id).presence ||
+      params.dig(:recipe, :child_category_id).presence ||
+      params.dig(:recipe, :category_id)
+
+    return if category_id.blank?
+
+    if action_name == 'create'
+      @recipe = current_user.recipes.build(recipe_params)
+    elsif action_name == 'update'
+      @recipe.assign_attributes(recipe_params.except(:images))
+    end
+
+    @recipe.category_id = category_id
+  end
+
   def set_recipe
     @recipe = Recipe.includes(:user).find(params[:id])
   end
@@ -83,7 +114,15 @@ class RecipesController < ApplicationController
   end
 
   def recipe_params
-    params.require(:recipe).permit(:title, :description, :category_id, :child_category_id, :grandchild_category_id, images: [])
+    params.require(:recipe).permit(
+      :title, :description,
+      :category_id, :child_category_id, :grandchild_category_id,
+      images: []
+    )
+  end
+
+  def removing_images?
+    params[:removed_image_ids].present?
   end
 
   def purge_removed_images
@@ -95,5 +134,33 @@ class RecipesController < ApplicationController
 
   def attach_new_images
     @recipe.images.attach(recipe_params[:images]) if recipe_params[:images]
+  end
+
+  def add_breadcrumbs_for(recipe)
+    category = recipe.category
+    category.self_and_ancestors.each do |cat|
+      add_breadcrumb(cat.name, category_path(cat))
+    end
+    add_breadcrumb(recipe.title.presence || "タイトル無し")
+  end
+
+  def setup_edit_categories(category)
+    @selected_category = category
+    @parent_category, @child_category, @grandchild_category = resolve_category_hierarchy(category)
+
+    @child_categories = @parent_category ? Category.where(parent_id: @parent_category.id) : []
+    @grandchild_categories = @child_category ? Category.where(parent_id: @child_category.id) : []
+  end
+
+  def resolve_category_hierarchy(category)
+    return [nil, nil, nil] unless category
+
+    if category.parent&.parent
+      [category.parent.parent, category.parent, category]
+    elsif category.parent
+      [category.parent, category, nil]
+    else
+      [category, nil, nil]
+    end
   end
 end
