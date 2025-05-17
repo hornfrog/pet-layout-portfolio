@@ -1,0 +1,13 @@
+<nav class="breadcrumbs">
+  <div class="breadcrumbs-inner">
+    <% breadcrumbs.each_with_index do |(name, path), index| %>
+      <% if path.present? && index != breadcrumbs.size - 1 %>
+        <%= link_to name, path %> &gt;
+      <% else %>
+        <span><%= name %></span>
+      <% end %>
+    <% end %>
+  </div>
+</nav>
+
+

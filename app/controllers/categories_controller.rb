@@ -2,6 +2,10 @@
 class CategoriesController < ApplicationController
   def show
     @category = Category.find(params[:id])
+    @category.self_and_ancestors.each do |ancestor|
+      add_breadcrumb(ancestor.name, category_path(ancestor))
+    end
+
     params[:category_id] = @category.id
 
     @recipes = Recipes::Fetcher.new(params: params).call

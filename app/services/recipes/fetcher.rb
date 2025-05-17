@@ -24,33 +24,28 @@ module Recipes
     attr_reader :params
 
     def base_recipes
-      return Recipe.order(created_at: :desc) if params[:category_id].blank?
-
-      category = Category.find(params[:category_id])
-      category_ids = category.self_and_descendants_ids
-
-      Recipe.where(category_id: category_ids)
-            .or(Recipe.where(child_category_id: category_ids))
-            .or(Recipe.where(grandchild_category_id: category_ids))
-            .order(created_at: :desc)
+      Recipe.order(created_at: :desc)
     end
 
     def apply_search
-      return if params[:keyword].blank?
+      return if @params[:keyword].blank?
 
-      @recipes = @recipes.search_by_keyword(params[:keyword])
+      @recipes = @recipes.search_by_keyword(@params[:keyword])
     end
 
     def apply_filters
-      filters = {
-        category_id: params[:parent_category],
-        child_category_id: params[:child_category],
-        grandchild_category_id: params[:grandchild_category]
-      }
+      category_id = @params[:grandchild_category].presence ||
+                    @params[:child_category].presence ||
+                    @params[:parent_category].presence ||
+                    @params[:category_id].presence
 
-      filters.each do |column, value|
-        @recipes = @recipes.where(column => value) if value.present?
-      end
+      return if category_id.blank?
+
+      category = Category.find_by(id: category_id)
+      return unless category
+
+      descendant_ids = category.self_and_descendants_ids
+      @recipes = @recipes.where(category_id: descendant_ids)
     end
 
     def apply_sorting
