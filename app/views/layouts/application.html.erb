@@ -1,89 +1,20 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PetLayouts</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-    
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://kit.fontawesome.com/2becc35aba.js" crossorigin="anonymous"></script>
-
-    <%= stylesheet_link_tag "application", media: "all" %>
-    <%= javascript_pack_tag "application", defer: true, data: { turbo: false } %>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <%= render 'layouts/head' %>
   </head>
 
   <body>
-  <header class="header bg-white border-bottom py-0 mb-0">
-  <div class="container-fluid px-4">
-  <div class="header-inner">
-      <div class="header-left d-flex align-items-center gap-3">
-      <%= link_to root_path do %>
-        <%= image_tag "logofrog.png", alt: "ロゴ", class: "logofrog" %>
-      <% end %>
-  
-      <%= link_to "投稿一覧", recipes_path, class: "nav-link" %>
+    <%= render 'layouts/header' %>
+    <%= render 'layouts/flash' %>
 
-        <%= category_navigation(@categories) %>
-        <%= render 'shared/search_form_keyword' %>
-      </div>
-
-      <div class="header-right text-end">
-        <% if user_signed_in? %>
-        <%= link_to "新規投稿", new_recipe_path, class: "btn-green me-2" %>
-          <div class="dropdown">
-            <a href="#" class="d-flex align-items-center text-dark text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
-              <% if current_user.avatar.attached? %>
-                <%= image_tag current_user.avatar, alt: "アバター", width: 32, height: 32, class: "rounded-circle me-2" %>
-              <% else %>
-                <%= image_tag "no-man.png", alt: "デフォルトアイコン", width: 32, height: 32, class: "rounded-circle me-2" %>
-              <% end %>
-              <strong><%= current_user.name %></strong>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-              <% unless current_user.guest? %>
-                <li><%= link_to "アカウント情報", account_path, class: "dropdown-item" %></li>
-                <li><%= link_to "プロフィール", current_user, class: "dropdown-item" %></li>
-                <li><%= link_to "マイレイアウト", recipes_user_path(current_user), class: "dropdown-item" %></li>
-                <li><%= link_to "お気に入り一覧", favorites_path, class: "dropdown-item" %></li>
-                <li><hr class="dropdown-divider"></li>
-              <% end %>
-              <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
-            </ul>
-          </div>
-        <% else %>
-          <%= button_to "ログイン", new_user_session_path, class: "btn-green me-2" %>
-          <%= button_to "ゲストログイン", guest_sign_in_path, method: :post, class: "btn-green me-2" %>
-          <%= link_to "新規登録", new_user_registration_path, class: "btn-green" %>
-        <% end %>
-      </div>
-    </div>
-  </div>
- </header>
-
- <% if flash[:notice] || flash[:alert] %>
-  <div class="flash-message-bg">
-    <div class="flash-message-inner">
-      <% if flash[:notice] %>
-        <div class="alert alert-success"><%= flash[:notice] %></div>
+    <main class="main-content">
+      <% unless current_page?(root_path) %>
+        <%= render 'shared/breadcrumbs' %>
       <% end %>
 
-      <% if flash[:alert] %>
-        <div class="alert alert-danger"><%= flash[:alert] %></div>
-      <% end %>
-    </div>
-  </div>
-<% end %>
-
-<main class="main-content">
-<% unless current_page?(root_path) %>
-  <%= render 'shared/breadcrumbs' %>
-<% end %>
-    <%= yield %>
-    <%= render 'layouts/footer' %>
-</main>    
+      <%= yield %>
+      <%= render 'layouts/footer' %>
+    </main>
   </body>
 </html>
-
