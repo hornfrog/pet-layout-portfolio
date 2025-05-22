@@ -7,19 +7,22 @@
   </div>
 </div>
 
-<div class="sort-tabs-wrapper">
-  <%= render 'recipes/sort_tabs' %>
-</div>
-
-<div class="container">
-  <div id="recipes-list">
-    <%= render 'recipes/recipe_list', recipes: @recipes %>
+<% if @recipes.present? %>
+  <div class="sort-tabs-wrapper">
+    <%= render 'recipes/sort_tabs' %>
   </div>
-</div>
 
-<div class="pagination-wrapper mt-4">
-  <div class="d-flex justify-content-center">
-    <%= paginate @recipes if @recipes.respond_to?(:total_pages) %>
+  <div class="container">
+    <div id="recipes-list">
+      <%= render 'recipes/recipe_list', recipes: @recipes %>
+    </div>
   </div>
-</div>
 
+  <div class="pagination-wrapper mt-4">
+    <div class="d-flex justify-content-center">
+      <%= paginate @recipes if @recipes.respond_to?(:total_pages) %>
+    </div>
+  </div>
+<% else %>
+  <p class="text-center mt-4">まだレイアウトの投稿はありません。</p>
+<% end %>
