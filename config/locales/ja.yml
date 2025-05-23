@@ -14,3 +14,18 @@ ja:
       previous: "前へ"
       next: "次へ"
       truncate: "..."
+  
+  activerecord:
+    models:
+      user: ユーザー
+    attributes:
+      user:
+        email: メールアドレス
+        password: パスワード
+        password_confirmation: パスワード（確認）
+
+  errors:
+    messages:
+      blank: "を入力してください。"
+      invalid: "が正しくありません"
+      too_short: "は%{count}文字以上で入力してください"
