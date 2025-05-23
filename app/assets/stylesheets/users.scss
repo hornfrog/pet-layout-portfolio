@@ -39,14 +39,10 @@
   resize: vertical;
 }
 
-  .profile-bottom-image {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-    width: 250px;
-    height: auto;
-    object-fit: contain;
-    z-index: 0;
-    pointer-events: none;
-  }
+.profile-bottom-image {
+  display: block;
+  margin: 40px auto 0 auto;
+  max-width: 450px;
+  height: auto;
+}
   
