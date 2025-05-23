@@ -1,5 +1,4 @@
 <main class="login-form-wrapper mx-auto" style="max-width: 500px; padding-top: 100px;">
-
 <h1 class="page-title mb-4 fs-2">ログイン</h1>
 
   <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
@@ -24,7 +23,7 @@
   <% end %>
 
     <div class="d-grid">
-      <%= f.submit "ログインする", class: "btn btn-success py-2 rounded-pill fw-bold" %>
+      <%= f.submit "ログインする", class: "btn-green" %>
     </div>
   <% end %>
 
