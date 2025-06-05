@@ -16,7 +16,10 @@ module Recipes
       apply_search
       apply_filters
       apply_sorting
-      @recipes.includes(:category, :likes).page(params[:page]).per(9)
+
+      @total_count = @recipes.count
+
+      @recipes = @recipes.includes(:category, :likes).page(params[:page]).per(9)
     end
 
     private
