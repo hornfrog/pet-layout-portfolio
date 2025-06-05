@@ -5,8 +5,11 @@ ja:
     recipe_updated: "レイアウトを更新しました！"
     recipe_deleted: "レイアウトを削除しました！"
     profile_updated: "プロフィールを更新しました！"
+    account_updated: "アカウント情報を更新しました"
+
   alerts:
     no_permission: "権限がありません"
+
   views:
     pagination:
       first: "最初"
@@ -14,18 +17,61 @@ ja:
       previous: "前へ"
       next: "次へ"
       truncate: "..."
-  
+
   activerecord:
     models:
-      user: ユーザー
+      user: "ユーザー"
+      recipe: "レシピ"
+
     attributes:
       user:
-        email: メールアドレス
-        password: パスワード
-        password_confirmation: パスワード（確認）
+        name: "ユーザー名"
+        email: "メールアドレス"
+        password: "パスワード"
+        password_confirmation: "パスワード（確認）"
+        current_password: "現在のパスワード"
+      recipe:
+        title: "タイトル"
+        category_id: "先頭のカテゴリ"
+        description: "レイアウト内容"
+
+    errors:
+      models:
+        user:
+          attributes:
+            name:
+              blank: "ユーザー名を入力してください"
+              too_long: "ユーザー名は%{count}文字以内で入力してください"
+            email:
+              blank: "メールアドレスを入力してください"
+            password:
+              blank: "パスワードを入力してください"
+              too_short: "パスワードは%{count}文字以上で入力してください"
+            password_confirmation:
+              confirmation: "パスワード（確認）が一致しません"
+            current_password:
+              blank: "現在のパスワードを入力してください"
+
+        recipe:
+          attributes:
+            title:
+              blank: "タイトルを入力してください"
+              too_long: "タイトルは%{count}文字以内で入力してください"
+            category_id:
+              blank: "先頭のカテゴリを選択してください"
+            description:
+              blank: "レイアウト内容を入力してください"
+              too_long: "レイアウト内容は%{count}文字以内で入力してください"
 
   errors:
     messages:
-      blank: "を入力してください。"
+      blank: "を入力してください"
       invalid: "が正しくありません"
       too_short: "は%{count}文字以上で入力してください"
+      too_long: "は%{count}文字以内で入力してください"
+      taken: "すでに使用されています"
+      confirmation: "が一致しません"
+
+    attributes:
+      current_password:
+        blank: "現在のパスワードを入力してください"

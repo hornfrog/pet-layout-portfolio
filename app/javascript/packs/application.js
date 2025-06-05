@@ -24,4 +24,12 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('[data-dismissible="true"]').forEach(el => {
+    el.addEventListener('click', () => {
+      el.style.display = 'none';
+    });
+  });
+});
+
   

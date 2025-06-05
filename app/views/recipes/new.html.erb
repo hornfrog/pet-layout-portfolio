@@ -9,6 +9,7 @@
     <label class="fw-bold me-3" style="min-width: 100px;">タイトル</label>
     <div class="form-area-wide">
       <%= f.text_field :title, class: "form-control" %>
+      <%= render 'shared/field_error', object: f.object, field: :title %>
       <small class="text-danger">※必須（30文字まで）</small>
     </div>
   </div>
@@ -27,8 +28,10 @@
           <%= f.select :grandchild_category_id, [], 
                 { prompt: "カテゴリ" }, 
                 { id: "grandchild_category", class: "form-select" } %>
+          <%= render 'shared/field_error', object: f.object, field: :category_id %>
+          <small class="text-danger">※必須（先頭のカテゴリを選択してください）</small>
         </div>
-      </div>
+  </div>
 
   <div class="mb-3 border-bottom pb-3 d-flex">
     <label class="fw-bold me-3" style="min-width: 100px;">画像<p>(5枚まで)</p></label>
@@ -45,6 +48,7 @@
     <label class="fw-bold me-3" style="min-width: 100px;">内容</label>
     <div class="form-area-description">
       <%= f.text_area :description, class: "form-control", rows: 6, placeholder: "レイアウトの内容、こだわりポイントを書くことができます" %>
+      <%= render 'shared/field_error', object: f.object, field: :description %>
       <small class="text-danger">※必須（500文字まで）</small>
     </div>
   </div>

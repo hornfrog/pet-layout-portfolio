@@ -3,11 +3,11 @@
 <div class="card mx-auto p-4 mt-3" style="max-width: 500px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
 
     <div class="form-group">
       <%= f.label :email, "メールアドレス", class: "form-label mt-2" %>
       <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+      <%= render 'shared/field_error', object: f.object, field: :email %>
     </div>
 
     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -17,13 +17,21 @@
     <% end %>
 
     <div class="form-group mt-3">
+      <%= f.label :current_password, "現在のパスワード", class: "form-label" %>
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "form-control" %>
+      <%= render 'shared/field_error', object: f.object, field: :current_password %>
+    </div>
+
+    <div class="form-group mt-3">
       <%= f.label :password, "新しいパスワード", class: "form-label" %>
       <%= f.password_field :password, autocomplete: "new-password", class: "form-control" %>
+      <%= render 'shared/field_error', object: f.object, field: :password %>
     </div>
 
     <div class="form-group mt-3">
       <%= f.label :password_confirmation, "新しいパスワード（確認用）", class: "form-label" %>
       <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
+      <%= render 'shared/field_error', object: f.object, field: :password_confirmation %>
     </div>
 
     <div class="text-center mt-4">

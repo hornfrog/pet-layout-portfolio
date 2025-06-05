@@ -26,7 +26,11 @@
 
         <div class="mb-3 border-bottom pb-2 d-flex">
           <div class="fw-bold me-3" style="min-width: 100px;">ユーザー名</div>
-          <div><%= f.text_field :name, class: "form-control" %></div>
+          <div>
+            <%= f.text_field :name, class: "form-control" %>
+            <%= render 'shared/field_error', object: f.object, field: :name %>
+            <small class="text-danger">※必須（20文字まで）</small>
+          </div>
         </div>
 
         <div class="mb-3 border-bottom pb-2 d-flex">

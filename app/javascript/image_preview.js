@@ -9,23 +9,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     container.addEventListener("click", function (event) {
       if (event.target.classList.contains("remove-image-btn")) {
+        event.preventDefault();
+
         const wrapper = event.target.closest(".image-wrapper");
         const imageId = wrapper.dataset.imageId;
 
         if (imageId) {
+
           wrapper.remove();
           const hiddenField = document.createElement("input");
           hiddenField.type = "hidden";
           hiddenField.name = "removed_image_ids[]";
           hiddenField.value = imageId;
           removedImagesContainer.appendChild(hiddenField);
+        } else {
+          const wrappers = Array.from(container.querySelectorAll(".image-wrapper"));
+          const index = wrappers.indexOf(wrapper);
+          if (index !== -1) {
+            imageFiles.splice(index, 1);
+            wrapper.remove();
+            updateInputFiles();
+          }
         }
       }
     });
 
-    input.addEventListener("change", function (event) {
+    input.addEventListener("change", function () {
       const existingCount = container.querySelectorAll(".image-wrapper[data-image-id]").length;
-      const newFiles = Array.from(event.target.files);
+      const newFiles = Array.from(input.files);
 
       const allowableCount = maxCount - existingCount - imageFiles.length;
       const allowableFiles = newFiles.slice(0, allowableCount);
@@ -38,6 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const reader = new FileReader();
         reader.onload = function (e) {
           const wrapper = document.createElement("div");
+          wrapper.classList.add("image-wrapper");
           wrapper.style.position = "relative";
           wrapper.style.display = "inline-block";
           wrapper.style.marginRight = "10px";
@@ -50,19 +62,22 @@ document.addEventListener("DOMContentLoaded", function () {
           img.style.borderRadius = "8px";
 
           const removeBtn = document.createElement("button");
+          removeBtn.type = "button";
           removeBtn.textContent = "×";
           removeBtn.classList.add("remove-image-btn");
-          removeBtn.style.position = "absolute";
-          removeBtn.style.top = "2px";
-          removeBtn.style.right = "2px";
-          removeBtn.style.background = "rgba(0,0,0,0.5)";
-          removeBtn.style.color = "#fff";
-          removeBtn.style.border = "none";
-          removeBtn.style.borderRadius = "50%";
-          removeBtn.style.cursor = "pointer";
-          removeBtn.style.width = "24px";
-          removeBtn.style.height = "24px";
-          removeBtn.style.fontSize = "16px";
+          Object.assign(removeBtn.style, {
+            position: "absolute",
+            top: "2px",
+            right: "2px",
+            background: "rgba(0,0,0,0.5)",
+            color: "#fff",
+            border: "none",
+            borderRadius: "50%",
+            cursor: "pointer",
+            width: "24px",
+            height: "24px",
+            fontSize: "16px"
+          });
 
           wrapper.appendChild(img);
           wrapper.appendChild(removeBtn);
@@ -87,8 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const preview = document.getElementById(previewId);
     if (!input || !preview) return;
 
-    input.addEventListener("change", function (event) {
-      const file = event.target.files[0];
+    input.addEventListener("change", function () {
+      const file = input.files[0];
       if (!file) return;
 
       const reader = new FileReader();

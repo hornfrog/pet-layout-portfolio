@@ -1,26 +1,28 @@
 <main class="login-form-wrapper mx-auto" style="max-width: 500px; padding-top: 100px;">
 <h1 class="page-title mb-4 fs-2">新規登録</h1>
-  <p class="text-center text-muted mb-4">アカウントを作成してサービスを利用しましょう！</p>
+  <p class="text-center text-muted mb-4">アカウント作成はこちらでできます！</p>
 
   <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-    <%= render "devise/shared/error_messages", resource: resource %>
-
+    
     <div class="mb-3">
       <label class="form-label fw-bold" for="user_name">ユーザー名</label>
       <span class="text-danger small ms-2">必須</span>
       <%= f.text_field :name, class: "form-control", id: "user_name", required: true %>
+      <%= render 'shared/field_error', object: f.object, field: :name %>
     </div>
 
     <div class="mb-3">
       <label class="form-label fw-bold" for="user_email">メールアドレス</label>
       <span class="text-danger small ms-2">必須</span>
       <%= f.email_field :email, class: "form-control", id: "user_email", autofocus: true, autocomplete: "email" %>
+      <%= render 'shared/field_error', object: f.object, field: :email %>
     </div>
 
     <div class="mb-3">
       <label class="form-label fw-bold" for="user_password">パスワード</label>
       <span class="text-danger small ms-2">必須</span>
       <%= f.password_field :password, class: "form-control", id: "user_password", autocomplete: "new-password" %>
+      <%= render 'shared/field_error', object: f.object, field: :password %>
       <div class="form-text">半角英数字<% if @minimum_password_length %>（<%= @minimum_password_length %>文字以上）<% end %></div>
     </div>
 
@@ -28,6 +30,7 @@
       <label class="form-label fw-bold" for="user_password_confirmation">パスワード（確認用）</label>
       <span class="text-danger small ms-2">必須</span>
       <%= f.password_field :password_confirmation, class: "form-control", id: "user_password_confirmation", autocomplete: "new-password" %>
+      <%= render 'shared/field_error', object: f.object, field: :password_confirmation %>
     </div>
 
     <div class="d-grid">
