@@ -49,7 +49,9 @@
     <% end %>
   </ul>
 <% else %>
-  <p class="no-recipes-message">まだレシピを投稿していません。</p>
+  <div class="empty-space">
+    <p class="no-recipes-message">まだレシピを投稿していません。</p>
+  </div>
 <% end %>
 <%= image_tag("ham.png", class: "users-recipepage-image") %>
 </main>
