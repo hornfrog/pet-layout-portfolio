@@ -5,7 +5,6 @@ module Users
   class SessionsController < Devise::SessionsController
     def new
       add_breadcrumb("ログイン")
-      flash.clear
       super
     end
 

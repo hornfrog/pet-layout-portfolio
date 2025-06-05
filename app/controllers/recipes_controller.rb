@@ -8,7 +8,6 @@ class RecipesController < ApplicationController
   def index
     add_breadcrumb("レイアウト一覧", recipes_path)
     @parent_categories = Category.where(parent_id: nil)
-
     fetch_recipes_with_total_count
     respond_to_format
   end
@@ -16,7 +15,6 @@ class RecipesController < ApplicationController
   def search
     add_breadcrumb("レイアウト一覧", recipes_path)
     add_breadcrumb("検索結果")
-
     fetch_recipes_with_total_count
     respond_to_format
   end
@@ -35,15 +33,19 @@ class RecipesController < ApplicationController
   def edit
     add_breadcrumb(@recipe.title, recipe_path(@recipe))
     add_breadcrumb("編集")
-
     @categories = Category.includes(:subcategories).where(parent_id: nil)
     setup_edit_categories(@recipe.category)
   end
 
   def create
+    @recipe = Recipe.new(recipe_params)
+    @recipe.user = current_user
+
     if @recipe.save
+      attach_new_images
       redirect_to @recipe, notice: I18n.t('notices.recipe_created')
     else
+      add_breadcrumb("新規投稿")
       @categories = Category.includes(:subcategories).where(parent_id: nil)
       render :new
     end
@@ -51,11 +53,17 @@ class RecipesController < ApplicationController
 
   def update
     purge_removed_images if removing_images?
+    category_id = @recipe.category_id
 
-    if @recipe.save
+    if @recipe.update(recipe_params.except(:images, :category_id, :child_category_id, :grandchild_category_id))
+      @recipe.update(category_id: category_id) if category_id.present?
       attach_new_images
       redirect_to @recipe, notice: I18n.t('notices.recipe_updated')
     else
+      add_breadcrumb(@recipe.title, recipe_path(@recipe))
+      add_breadcrumb("編集")
+      @categories = Category.includes(:subcategories).where(parent_id: nil)
+      setup_edit_categories(@recipe.category)
       render :edit
     end
   end
@@ -66,12 +74,6 @@ class RecipesController < ApplicationController
       request.referer&.include?(recipe_path(@recipe.id)) ? recipes_path : request.referer || recipes_path,
       notice: I18n.t('notices.recipe_deleted')
     )
-  end
-
-  def render_recipes_json
-    html = render_to_string(partial: "recipes/recipe_list", formats: [:html], locals: { recipes: @recipes })
-    count = @total_recipes_count.is_a?(Hash) ? @total_recipes_count.values.sum : @total_recipes_count
-    render json: { html: html, count: count }
   end
 
   private
@@ -88,21 +90,10 @@ class RecipesController < ApplicationController
     end
   end
 
-  def set_category_id_from_params
-    category_id =
-      params.dig(:recipe, :grandchild_category_id).presence ||
-      params.dig(:recipe, :child_category_id).presence ||
-      params.dig(:recipe, :category_id)
-
-    return if category_id.blank?
-
-    if action_name == 'create'
-      @recipe = current_user.recipes.build(recipe_params)
-    elsif action_name == 'update'
-      @recipe.assign_attributes(recipe_params.except(:images))
-    end
-
-    @recipe.category_id = category_id
+  def render_recipes_json
+    html = render_to_string(partial: "recipes/recipe_list", formats: [:html], locals: { recipes: @recipes })
+    count = @total_recipes_count.is_a?(Hash) ? @total_recipes_count.values.sum : @total_recipes_count
+    render json: { html: html, count: count }
   end
 
   def set_recipe
@@ -133,7 +124,28 @@ class RecipesController < ApplicationController
   end
 
   def attach_new_images
-    @recipe.images.attach(recipe_params[:images]) if recipe_params[:images]
+    if recipe_params[:images]
+      recipe_params[:images].each do |image|
+        @recipe.images.attach(image)
+      end
+    end
+  end
+
+  def set_category_id_from_params
+    category_id =
+      params.dig(:recipe, :grandchild_category_id).presence ||
+      params.dig(:recipe, :child_category_id).presence ||
+      params.dig(:recipe, :category_id)
+
+    return if category_id.blank?
+
+    if action_name == 'create'
+      @recipe = current_user.recipes.build(recipe_params.except(:images))
+    elsif action_name == 'update'
+      @recipe.assign_attributes(recipe_params.except(:images))
+    end
+
+    @recipe.category_id = category_id
   end
 
   def add_breadcrumbs_for(recipe)

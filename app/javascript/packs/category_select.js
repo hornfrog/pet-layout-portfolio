@@ -33,23 +33,29 @@ document.addEventListener("DOMContentLoaded", function() {
           });
   });
 
-  childCategory.addEventListener("change", function() {
-      let childId = childCategory.value;
-      grandchildCategory.innerHTML = '<option value="">選択してください</option>';
-      if (childId === "") return;
+  childCategory.addEventListener("change", function () {
+  let childId = childCategory.value;
 
-      fetch(`/categories/children?parent_id=${childId}`)
-          .then(response => response.json())
-          .then(data => {
-              data.forEach(grandchild => {
-                  let option = document.createElement("option");
-                  option.value = grandchild.id;
-                  option.textContent = grandchild.name;
-                  if (grandchild.id == selectedGrandchild) option.selected = true;
-                  grandchildCategory.appendChild(option);
-              });
-          });
-  });
+  grandchildCategory.innerHTML = '<option value="">選択してください</option>';
+
+  if (childId === "") return;
+
+  fetch(`/categories/children?parent_id=${childId}`)
+    .then((response) => response.json())
+    .then((data) => {
+      data.forEach((grandchild) => {
+        let option = document.createElement("option");
+        option.value = grandchild.id;
+        option.textContent = grandchild.name;
+        if (grandchild.id == selectedGrandchild) option.selected = true;
+        grandchildCategory.appendChild(option);
+      });
+    });
+});
+
+grandchildCategory.addEventListener("change", function () {
+  document.getElementById("hidden_grandchild_category_id").value = grandchildCategory.value;
+});
 
   setTimeout(() => {
       if (parentCategory.value) {

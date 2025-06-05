@@ -8,6 +8,10 @@ class Recipe < ApplicationRecord
   has_many :likes, dependent: :destroy
   has_many :liked_users, through: :likes, source: :user
 
+  validates :title, presence: true, length: { maximum: 30 }
+  validates :category_id, presence: true # rubocop:disable Rails/RedundantPresenceValidationOnBelongsTo
+  validates :description, presence: true, length: { maximum: 500 }
+
   scope :search_by_keyword, lambda { |keyword|
     if keyword.present?
       where("title LIKE :keyword OR description LIKE :keyword", keyword: "%#{sanitize_sql_like(keyword)}%")
