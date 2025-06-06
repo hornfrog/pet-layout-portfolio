@@ -57,7 +57,7 @@
 
   <div class="label-description-box">
     <div class="label">説明</div>
-    <div class="description"><%= @recipe.description %></div>
+    <div class="description"><%= simple_format(@recipe.description) %></div>
   </div>
 
   <div class="action-buttons mt-4">

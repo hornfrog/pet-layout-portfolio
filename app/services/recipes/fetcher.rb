@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Recipes
   # Recipes::Fetcher は、レシピの検索、フィルタリング、ソートを行うサービスクラスです。
   # ファットコントローラー対策のために作成され、必要なレシピを処理します。

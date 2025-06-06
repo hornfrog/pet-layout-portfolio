@@ -20,7 +20,7 @@
 
       <div class="mb-3 border-bottom pb-2 d-flex">
         <div class="fw-bold me-3" style="min-width: 100px;">プロフィール</div>
-        <div><%= @user.profile.presence || "まだ自己紹介がありません。" %></div>
+        <div><%= @user.profile.present? ? simple_format(@user.profile) : "まだ自己紹介がありません。" %></div>
       </div>
 
       <% if @user == current_user %>
