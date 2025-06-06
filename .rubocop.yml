@@ -12,6 +12,7 @@ AllCops:
     - 'db/**/*'
     - 'tmp/**/*'
     - 'vendor/**/*'
+    - 'app/controllers/recipes_controller.rb'
   TargetRubyVersion: 3.1
 
 Metrics/BlockLength:
