@@ -5,9 +5,7 @@ class Category < ApplicationRecord
   has_many :recipes, dependent: :destroy
 
   def self_and_descendants_ids
-    [id] + Category.where(parent_id: id).flat_map do |child|
-      [child.id] + child.self_and_descendants_ids
-    end
+    ([id] + subcategories.flat_map(&:self_and_descendants_ids)).uniq
   end
 
   def self_and_ancestors

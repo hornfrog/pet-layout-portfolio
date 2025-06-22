@@ -1,8 +1,8 @@
 FactoryBot.define do
   factory :recipe do
-    title { "MyString" }
-    description { "MyText" }
-    user { nil }
-    category { nil }
+    title { 'ジャングルレイアウト' }
+    description { 'アマゾンのようなレイアウトです。' }
+    user
+    category
   end
 end
