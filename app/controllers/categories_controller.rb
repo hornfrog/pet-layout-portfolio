@@ -32,4 +32,10 @@ class CategoriesController < ApplicationController
       format.json { render_recipes_json }
     end
   end
+
+  def render_recipes_json
+    html = render_to_string(partial: "recipes/recipe_list", formats: [:html], locals: { recipes: @recipes })
+    count = @total_recipes_count.is_a?(Hash) ? @total_recipes_count.values.sum : @total_recipes_count
+    render json: { html: html, count: count }
+  end
 end

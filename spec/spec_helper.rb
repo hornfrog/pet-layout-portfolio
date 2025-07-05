@@ -13,6 +13,8 @@
 # it.
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
+require 'warden'
+
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -89,4 +91,7 @@ RSpec.configure do |config|
   #   # test failures related to randomization by passing the same `--seed` value
   #   # as the one that triggered the failure.
   #   Kernel.srand config.seed
+  config.include Warden::Test::Helpers
+  config.before(:suite) { Warden.test_mode! }
+  config.after(:each) { Warden.test_reset! }
 end

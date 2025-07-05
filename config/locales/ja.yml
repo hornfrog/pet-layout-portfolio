@@ -66,7 +66,7 @@ ja:
   errors:
     messages:
       blank: "を入力してください"
-      invalid: "が正しくありません"
+      invalid: "メールアドレスは不正な値です"
       too_short: "は%{count}文字以上で入力してください"
       too_long: "は%{count}文字以内で入力してください"
       taken: "すでに使用されています"
