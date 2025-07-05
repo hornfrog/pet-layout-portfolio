@@ -42,7 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const allowableFiles = newFiles.slice(0, allowableCount);
 
       if (newFiles.length > allowableFiles.length) {
-        alert(`画像は最大 ${maxCount} 枚まで選択できます。`);
+        const alertEl = document.getElementById("alert-placeholder");
+        if (alertEl) {
+          alertEl.innerText = `画像は最大 ${maxCount} 枚まで選択できます。`;
+          alertEl.style.display = 'block';
+        }
       }
 
       allowableFiles.forEach((file) => {
