@@ -36,3 +36,5 @@ end
     Category.find_or_create_by(name: grandchild_name, parent: parent)
   end
 end
+
+load(Rails.root.join('db', 'seeds', "#{Rails.env}.rb")) if File.exist?(Rails.root.join('db', 'seeds', "#{Rails.env}.rb"))
