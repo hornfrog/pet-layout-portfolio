@@ -82,6 +82,4 @@ test:
 #
 production:
   <<: *default
-  database: pet_layouts_production
-  username: pet_layouts
-  password: <%= ENV['PET_LAYOUTS_DATABASE_PASSWORD'] %>
+  durl: <%= ENV['DATABASE_URL'] %>
