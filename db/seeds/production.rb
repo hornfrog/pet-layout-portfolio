@@ -12,14 +12,18 @@ def find_category_path(names)
 end
 
 def create_recipe(title:, category_path:, image_urls:, description:, user:)
-  category = find_category_path(category_path)
+ 
+  grandchild = find_category_path(category_path)
+
+  child = grandchild.parent
+  root  = child&.parent
 
   Recipe.create!(
     title: title,
     description: description,
-    category_id: category.root.id,
-    child_category_id: category.parent&.id,
-    grandchild_category_id: category.id,
+    category_id: root&.id,
+    child_category_id: child&.id,
+    grandchild_category_id: grandchild.id,
     user: user,
     remote_images_urls: image_urls
   )
