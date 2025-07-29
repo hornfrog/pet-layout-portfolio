@@ -43,8 +43,8 @@ recipes = [
     title: "ブンちゃん",
     category_path: ["両生類", "カエル", "地上棲"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/bunchan/bunchan1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/bunchan/bunchan2.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/bunchan/bunchan1.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/bunchan/bunchan2.jpg"
     ],
     description: <<~TEXT
       【種類】クランウェルツノガエル
@@ -56,8 +56,8 @@ recipes = [
     title: "コッパ",
     category_path: ["両生類", "カエル", "地上棲"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/coppa/coppa1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/coppa/coppa2.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/coppa/coppa1.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/coppa/coppa2.jpg"
     ],
     description: <<~TEXT
       【種類】クランウェルツノガエル
@@ -69,7 +69,7 @@ recipes = [
     title: "レオパンヌ",
     category_path: ["爬虫類", "ヤモリ", "地上棲"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/leopannu1.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/leopannu1.jpg"
     ],
     description: <<~TEXT
       【種類】ヒョウモントカゲモドキ
@@ -81,7 +81,7 @@ recipes = [
     title: "イモリーヌ",
     category_path: ["両生類", "イモリ・サンショウウオ"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/imorienu1.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/imorienu1.jpg"
     ],
     description: <<~TEXT
       【種類】アカハライモリ
@@ -93,7 +93,7 @@ recipes = [
     title: "ゴマりん",
     category_path: ["小動物", "ハムスター"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/gomarin.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/gomarin.jpg"
     ],
     description: <<~TEXT
       【種類】ゴールデンハムスター
@@ -105,8 +105,8 @@ recipes = [
     title: "フェルン",
     category_path: ["爬虫類", "ヤモリ", "地上棲"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/ferun/ferun1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/ferun/ferun2.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/ferun/ferun1.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/ferun/ferun2.jpg"
     ],
     description: <<~TEXT
       【種類】ヒョウモントカゲモドキ
@@ -118,8 +118,8 @@ recipes = [
     title: "ポチャコ",
     category_path: ["両生類", "カエル", "地上棲"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/pochaco/pochaco1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/pochaco/pochaco2.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/pochaco/pochaco1.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/pochaco/pochaco2.jpg"
     ],
     description: <<~TEXT
       【種類】チャコガエル
@@ -131,8 +131,8 @@ recipes = [
     title: "ニコ",
     category_path: ["爬虫類", "ヤモリ", "樹上棲"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/nico/nico1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/terra-space/portfolio/nico/nico2.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/nico/nico1.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/nico/nico2.jpg"
     ],
     description: <<~TEXT
       【種類】グランディスヒルヤモリ
