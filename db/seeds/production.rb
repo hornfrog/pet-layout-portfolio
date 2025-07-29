@@ -1,7 +1,7 @@
 puts "Start seeding production data..."
 
 test_user = User.find_or_create_by!(email: "test@example.com") do |user|
-  user.username = "テスト"
+  user.name = "テスト"
   user.password = "password123"
 end
 
