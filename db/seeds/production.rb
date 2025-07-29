@@ -1,3 +1,5 @@
+require "open-uri"
+
 puts "Start seeding production data..."
 
 test_user = User.find_or_create_by!(email: "test@example.com") do |user|
@@ -12,21 +14,28 @@ def find_category_path(names)
 end
 
 def create_recipe(title:, category_path:, image_urls:, description:, user:)
- 
   grandchild = find_category_path(category_path)
-
   child = grandchild.parent
   root  = child&.parent
 
-  Recipe.create!(
+  recipe = Recipe.create!(
     title: title,
     description: description,
     category_id: root&.id,
     child_category_id: child&.id,
     grandchild_category_id: grandchild.id,
-    user: user,
-    remote_images_urls: image_urls
+    user: user
   )
+
+  downloaded_images = image_urls.map do |url|
+    filename = File.basename(URI.parse(url).path)
+    file = URI.open(url)
+    { io: file, filename: filename, content_type: "image/jpeg" }
+  end
+
+  Recipes::ImagesAttachmentService.new(recipe, downloaded_images).attach
+
+  recipe
 end
 
 recipes = [
