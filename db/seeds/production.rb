@@ -1,42 +1,18 @@
 require "open-uri"
 
-puts "Start seeding production data..."
+puts " 既存データ削除中..."
+Like.destroy_all
+Recipe.destroy_all
+Category.destroy_all
+User.where(email: "test@example.com").destroy_all
+puts " 削除完了"
 
-test_user = User.find_or_create_by!(email: "test@example.com") do |user|
-  user.name = "テスト"
-  user.password = "password123"
-end
-
-def find_category_path(names)
-  names.inject(nil) do |parent, name|
-    Category.find_by!(name: name, parent: parent)
-  end
-end
-
-def create_recipe(title:, category_path:, image_urls:, description:, user:)
-  grandchild = find_category_path(category_path)
-  child = grandchild.parent
-  root  = child&.parent
-
-  recipe = Recipe.create!(
-    title: title,
-    description: description,
-    category_id: root&.id,
-    child_category_id: child&.id,
-    grandchild_category_id: grandchild.id,
-    user: user
-  )
-
-  downloaded_images = image_urls.map do |url|
-    filename = File.basename(URI.parse(url).path)
-    file = URI.open(url)
-    { io: file, filename: filename, content_type: "image/jpeg" }
-  end
-
-  Recipes::ImagesAttachmentService.new(recipe, downloaded_images).attach
-
-  recipe
-end
+test_user = User.create!(
+  name: "テスト",
+  email: "test@example.com",
+  password: "password123"
+)
+puts " テストユーザー作成完了"
 
 recipes = [
   {
@@ -142,8 +118,42 @@ recipes = [
   }
 ]
 
-recipes.each do |data|
-  create_recipe(**data, user: test_user)
+def find_or_create_category_by_path(path)
+  parent = nil
+  path.map do |name|
+    Category.find_or_create_by!(name: name, parent: parent).tap do |cat|
+      parent = cat
+    end
+  end
 end
 
-puts "✅ Production seeds complete!"
+puts "レシピ作成中..."
+
+ActiveRecord::Base.transaction do
+  recipes.each_with_index do |recipe_data, i|
+    categories = find_or_create_category_by_path(recipe_data[:category_path])
+    parent, child, grandchild = categories
+
+    recipe = Recipe.create!(
+      user: test_user,
+      title: recipe_data[:title],
+      description: recipe_data[:description],
+      category_id: parent&.id,
+      child_category_id: child&.id,
+      grandchild_category_id: grandchild&.id
+    )
+
+    recipe_data[:image_urls].each do |url|
+      begin
+        file = URI.open(url)
+        recipe.images.attach(io: file, filename: File.basename(url))
+      rescue => e
+        puts "画像の取得に失敗しました: #{url} (#{e.message})"
+      end
+    end
+
+    puts "(#{i + 1}/#{recipes.length}) #{recipe.title} 作成完了"
+  end
+end
+
+puts " Seedデータ投入完了"
