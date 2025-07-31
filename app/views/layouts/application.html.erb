@@ -8,7 +8,7 @@
   <%= render 'layouts/header' %>
 
   <main class="main-content">
-    <%= render 'layouts/flash' %> <!-- ここに移動！ -->
+    <%= render 'layouts/flash' %>
 
     <% unless current_page?(root_path) || controller_name == 'passwords' %>
       <%= render 'shared/breadcrumbs' %>

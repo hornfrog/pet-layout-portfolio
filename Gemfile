@@ -71,3 +71,5 @@ gem 'devise-i18n'
 gem "bootstrap", "~> 5.3.0"
 gem 'kaminari'
 gem 'aws-sdk-s3', require: false
+gem 'image_processing', '~> 1.2'
+gem 'mini_magick'
