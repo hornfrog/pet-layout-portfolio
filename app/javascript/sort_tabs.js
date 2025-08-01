@@ -18,9 +18,14 @@ document.addEventListener("DOMContentLoaded", function () {
       .then(data => {
         const target = document.querySelector("#recipes-list");
         const countDisplay = document.querySelector("#recipe-count");
+
         if (target) {
           target.innerHTML = data.html;
+
+          if (window.bindLikeButtons) window.bindLikeButtons();
+          if (window.bindFavoriteButtons) window.bindFavoriteButtons();
         }
+
         if (countDisplay) {
           countDisplay.textContent = `投稿件数: ${data.count} 件`;
         }
