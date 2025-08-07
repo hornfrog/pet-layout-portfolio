@@ -1,8 +1,7 @@
 # favorites_controller はお気に入り機能の管理をするコントローラーです。
 class FavoritesController < ApplicationController
   before_action :authenticate_user!
-  before_action :reject_guest_user, only: [:create, :destroy]
-
+  
   def index
     add_breadcrumb("お気に入り一覧")
 
@@ -33,11 +32,5 @@ class FavoritesController < ApplicationController
     else
       render json: { status: "error", message: "お気に入り解除に失敗しました。" }
     end
-  end
-
-  private
-
-  def reject_guest_user
-    render json: { status: "error", message: "ゲストユーザーはお気に入りできません。" }, status: :forbidden if current_user.guest?
   end
 end

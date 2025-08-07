@@ -6,6 +6,7 @@ module Users
     before_action :authenticate_user!, only: [:show]
     before_action :set_new_breadcrumb, only: [:new, :create]
     before_action :set_breadcrumbs_for_edit, only: [:edit, :update]
+    before_action :reject_guest_user, only: [:edit, :update]
 
     def show
       add_breadcrumb("アカウント情報")
@@ -32,6 +33,12 @@ module Users
     def set_breadcrumbs_for_edit
       add_breadcrumb("アカウント情報", account_path)
       add_breadcrumb("アカウント編集")
+    end
+
+    def reject_guest_user
+      if current_user&.guest?
+        redirect_to root_path, alert: "ゲストユーザーはアカウントの編集はできません。"
+      end
     end
   end
 end

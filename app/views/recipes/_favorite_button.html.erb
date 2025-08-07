@@ -1,15 +1,9 @@
 <% if recipe.user != current_user %>
   <% if user_signed_in? %>
-    <% if current_user.guest? %>
-      <button class="favorite-button recipe-action-button guest-user">
-        <i class="fa-regular fa-star"></i>
-      </button>
-    <% else %>
-      <% favorite = current_user.favorites.find_by(recipe: recipe) %>
-      <button class="favorite-button recipe-action-button" data-url="<%= recipe_favorite_path(recipe) %>" data-method="<%= favorite ? 'delete' : 'post' %>">
-        <i class="<%= favorite ? 'fa-solid fa-star' : 'fa-regular fa-star' %>" style="<%= favorite ? 'color: gold;' : '' %>"></i>
-      </button>
-    <% end %>
+    <% favorite = current_user.favorites.find_by(recipe: recipe) %>
+    <button class="favorite-button recipe-action-button" data-url="<%= recipe_favorite_path(recipe) %>" data-method="<%= favorite ? 'delete' : 'post' %>">
+      <i class="<%= favorite ? 'fa-solid fa-star' : 'fa-regular fa-star' %>" style="<%= favorite ? 'color: gold;' : '' %>"></i>
+    </button>
   <% else %>
     <button class="favorite-button recipe-action-button guest-user">
       <i class="fa-regular fa-star"></i>

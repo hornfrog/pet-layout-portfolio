@@ -24,13 +24,11 @@
               <strong><%= current_user.name %></strong>
             </a>
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownUser">
-              <% unless current_user.guest? %>
                 <li><%= link_to "アカウント情報", account_path, class: "dropdown-item" %></li>
                 <li><%= link_to "プロフィール", current_user, class: "dropdown-item" %></li>
                 <li><%= link_to "マイレイアウト", recipes_user_path(current_user), class: "dropdown-item" %></li>
                 <li><%= link_to "お気に入り一覧", favorites_path, class: "dropdown-item" %></li>
                 <li><hr class="dropdown-divider"></li>
-              <% end %>
               <li><%= link_to "ログアウト", destroy_user_session_path, method: :delete, class: "dropdown-item" %></li>
             </ul>
           </div>

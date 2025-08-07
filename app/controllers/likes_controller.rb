@@ -1,7 +1,6 @@
 # LikesController は「いいね」の操作を管理するコントローラーです。
 class LikesController < ApplicationController
   before_action :authenticate_user!
-  before_action :reject_guest_user
   before_action :set_recipe, only: [:create, :destroy]
 
   def create
@@ -30,11 +29,5 @@ class LikesController < ApplicationController
 
   def set_recipe
     @recipe = Recipe.find(params[:recipe_id])
-  end
-
-  def reject_guest_user
-    return unless current_user.guest?
-
-    render json: { status: "error" }, status: :forbidden
   end
 end
