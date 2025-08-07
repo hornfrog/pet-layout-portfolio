@@ -1,4 +1,4 @@
-<% if current_user && !current_user.guest? %>
+<% if user_signed_in? %>
   <% if current_user.liked?(recipe) %>
     <button class="like-button recipe-action-button" data-url="<%= recipe_like_path(recipe) %>" data-method="delete">
       <i class="fa-solid fa-heart" style="color: red;"></i> <span class="like-count"><%= recipe.likes.count %></span>
@@ -9,7 +9,8 @@
     </button>
   <% end %>
 <% else %>
-  <div>
+  <button class="like-button recipe-action-button guest-user">
     <i class="fa-regular fa-heart"></i> <span class="like-count"><%= recipe.likes.count %></span>
-  </div>
+  </button>
 <% end %>
+

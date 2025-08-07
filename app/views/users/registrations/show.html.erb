@@ -17,9 +17,11 @@
       <div><%= current_user.created_at.strftime("%Y年%m月%d日") %></div>
     </div>
 
-    <div class="text-end mt-4">
-      <%= link_to "編集する", edit_user_registration_path, class: "btn-green" %>
-    </div>
+    <% unless current_user.guest? %>
+      <div class="text-end mt-4">
+        <%= link_to "編集する", edit_user_registration_path, class: "btn-green" %>
+      </div>
+    <% end %>
   </div>
 </div>
 <%= image_tag("leopa3.png", class: "bottom-image") %>

@@ -67,7 +67,7 @@
       <%= render "recipes/favorite_button", recipe: @recipe %>
     </div>
 
-    <% if current_user && current_user == @recipe.user && !current_user.guest? %>
+    <% if current_user && current_user == @recipe.user %>
       <div class="d-flex justify-content-start mb-3 gap-2">
         <%= link_to "編集", edit_recipe_path(@recipe), class: "btn-green" %>
         <%= link_to "削除", recipe_path(@recipe), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "btn-cancel" %>
