@@ -35,6 +35,7 @@
             <div class="users-recipe-actions">
               <div class="users-recipe-like">
                 <%= render "recipes/like_button", recipe: recipe %>
+                <%= render "recipes/favorite_button", recipe: recipe %>
               </div>
             <% if current_user == recipe.user %>
               <div class="users-recipe-edit-delete">

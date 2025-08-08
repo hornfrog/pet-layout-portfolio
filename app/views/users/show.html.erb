@@ -6,9 +6,9 @@
         <div class="fw-bold me-3" style="min-width: 100px;">アイコン</div>
         <div>
           <% if @user.avatar.attached? %>
-            <%= image_tag @user.avatar, class: "user-avatar", alt: "プロフィール画像" %>
+            <%= image_tag @user.avatar, class: "user-profile-avatar", alt: "プロフィール画像" %>
           <% else %>
-            <%= image_tag "no-man.png",  class: "user-avatar", alt: "デフォルトプロフィール画像" %>
+            <%= image_tag "no-man.png",  class: "user-profile-avatar", alt: "デフォルトプロフィール画像" %>
           <% end %>
         </div>
       </div>

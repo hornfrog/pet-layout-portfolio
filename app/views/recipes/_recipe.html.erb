@@ -12,7 +12,14 @@
       <h5 class="card-title">
         <%= link_to recipe.title, recipe_path(recipe), class: "text-decoration-none text-dark" %>
       </h5>
-      <p class="card-text small"><%= link_to recipe.user.name, user_path(recipe.user) %></p>
+      <p class="card-text small d-flex align-items-center">
+        <% if recipe.user.avatar.attached? %>
+          <%= image_tag recipe.user.avatar, class: "user-avatar me-2", alt: "投稿者アイコン" %>
+        <% else %>
+          <%= image_tag "no-man.png", class: "user-avatar me-2", alt: "デフォルトアイコン" %>
+        <% end %>
+        <%= link_to recipe.user.name, user_path(recipe.user), class: "text-decoration-none" %>
+      </p>
       <p class="card-text small text-muted"><%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %></p>
 
       <div class="d-flex justify-content-start gap-3 mt-2">
