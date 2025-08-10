@@ -10,7 +10,7 @@
 
     <div class="card-body">
       <h5 class="card-title">
-        <%= link_to recipe.title, recipe_path(recipe), class: "text-decoration-none text-dark" %>
+        <%= link_to recipe.title, recipe_path(recipe), class: "recipe-title-link" %>
       </h5>
       <p class="card-text small d-flex align-items-center">
         <% if recipe.user.avatar.attached? %>
@@ -18,7 +18,7 @@
         <% else %>
           <%= image_tag "no-man.png", class: "user-avatar me-2", alt: "デフォルトアイコン" %>
         <% end %>
-        <%= link_to recipe.user.name, user_path(recipe.user), class: "text-decoration-none" %>
+        <%= link_to recipe.user.name, user_path(recipe.user), class: "recipe-user-link" %>
       </p>
       <p class="card-text small text-muted"><%= recipe.created_at.strftime("%Y-%m-%d %H:%M") %></p>
 

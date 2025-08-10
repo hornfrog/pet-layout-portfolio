@@ -1,6 +1,6 @@
 <div class="container my-4 pt-5">
 
-  <h1 class="fs-2 mb-2 mt-4"><%= @recipe.title %></h1>
+  <h1 class="fs-2 mb-4 mt-0 recipe-title"><%= @recipe.title %></h1>
 
   <div class="d-flex align-items-center mb-2">
     <% if @recipe.user.avatar.attached? %>
@@ -8,7 +8,7 @@
     <% else %>
       <%= image_tag "no-man.png", class: "user-avatar", alt: "デフォルトアイコン" %>
     <% end %>
-    <%= link_to @recipe.user.name, user_path(@recipe.user), class: "text-decoration-none fw-bold" %>
+    <%= link_to @recipe.user.name, user_path(@recipe.user), class: "recipe-user-link" %>
   </div>
 
   <p class="text-muted mb-3">
