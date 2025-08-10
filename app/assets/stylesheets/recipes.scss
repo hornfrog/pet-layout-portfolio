@@ -124,3 +124,31 @@
 }
 }
 
+.recipe-title-link{
+  text-decoration: none;
+  color: #212529; 
+  &:hover {
+    color: #aaa;
+  }
+}
+
+.recipe-user-link {
+  text-decoration: none;
+  color: #212529; 
+  font-weight: bold; 
+
+  &:hover {
+    color: #aaa;
+  }
+}
+
+.recipe-form {
+  label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: bold;
+  }
+}
