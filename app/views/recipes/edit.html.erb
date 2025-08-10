@@ -3,7 +3,7 @@
   <p class="mb-4">レイアウトの内容を編集できます</p>
 
   <div class="card p-4 shadow">
-  <%= form_with model: @recipe, local: true, html: { multipart: true } do |f| %>
+  <%= form_with model: @recipe, class: "recipe-form", local: true, html: { multipart: true } do |f| %>
 
     <div class="mb-3 border-bottom pb-3 d-flex">
       <label class="fw-bold me-3" style="min-width: 100px;">タイトル</label>
@@ -36,7 +36,7 @@
     </div>
 
     <div class="mb-3 border-bottom pb-3 d-flex">
-      <label class="fw-bold me-3" style="min-width: 100px;">画像<p>(5枚まで)</p></label>
+      <label class="fw-bold me-3" style="min-width: 100px;">画像<br>(5枚まで)</label>
       <div class="w-100">
       <%= f.file_field :images, multiple: true, accept: 'image/*', id: "image-input", data: { existing_count: @recipe.images.size } %>
         <div id="image-preview-container" style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
