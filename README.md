@@ -28,14 +28,15 @@ URL: https://terra-space-3a16a086e2f2.herokuapp.com/
 
 ---
 
-## 4. デモユーザー情報
+## 4. ゲストログイン
 
 以下のアカウントでログイン可能です。
 
-- メールアドレス：**test@example.com**
-- パスワード：**password123**
+- ゲストログインボタンからワンクリックでログインできます。
 
-> ログイン後、投稿・編集・お気に入りなどの機能をお試しいただけます。
+> ※通常ユーザーと同等の機能を利用することができます。
+
+![ゲストログインボタン](./public/images/guest_button.png)
 
 ---
 
@@ -54,7 +55,10 @@ URL: https://terra-space-3a16a086e2f2.herokuapp.com/
 ## 6. 機能一覧
 
 ### 投稿機能
-- レイアウトの投稿（画像／説明／カテゴリ）
+- タイトル、レイアウトの内容、画像を投稿可能。
+![新規投稿](./public/images/layout_create.png)
+- 使用アイテムや工夫したポイントを詳しく閲覧できます。
+![詳細画面](./public/images/layout_show.png)
 - 投稿の編集・削除
 - 新着順／人気順での並び替え
 
@@ -86,17 +90,23 @@ URL: https://terra-space-3a16a086e2f2.herokuapp.com/
 - HTML / CSS / JavaScript
 - Bootstrap（スタイリング）
 - Font Awesome（アイコン）
+ ・いいね・お気に入りなど直感的なUIを提供するため採用　
 
 ### バックエンド
 - Ruby 3.0.4
 - Ruby on Rails 6.1.7.10
+ ・MVCモデルで効率的な開発が可能なため
 - PostgreSQL（データベース）
+ ・Herokuとの親和性が高く、本番環境で安定稼働するため  
 
 ### インフラ・環境
 - Devise（認証、ゲストログイン含む）
-- Heroku（デプロイ準備中）
+ ・認証機能を安全かつ効率的に実装可能   
+- Heroku（デプロイ）
+ ・Railsアプリのデプロイに適しており、低価格プランにより低コストで運用可能。
 - Git / GitHub（バージョン管理）
 - ER図生成:rails-erd + Graphviz
+ ・設計の可視化を行い、データベース構造を明確化するため  
 
 ---
 
