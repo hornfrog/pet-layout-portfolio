@@ -50,105 +50,119 @@ end
 puts "== 投稿データ投入 =="
 
 recipes = [
-  {
-    title: "ブンちゃん",
+   {
+    title: "クランウェルツノガエルのレイアウト例",
     category_path: ["両生類", "カエル", "地上棲"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/bunchan/bunchan1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/bunchan/bunchan2.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/bunchan/frog1.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/bunchan/frog2.jpg"
     ],
     description: <<~TEXT
-      【種類】クランウェルツノガエル
-      【品種】アルビノ
-      【コメント】2020年12月に家に来た
+      【種類】クランウェルツノガエル(ブラウン)
+
+      【使用アイテム】
+      グラステラリウム3030、ソイル、軽石、コルクボード、流木、植物(水草、苔)、
+      鉢底ネット、照明(アクアリウム用)
+
+      【ポイント】
+      ツノガエル類は地上性の為、低面積のあるグラステラリウム3030を使用。
+      低床はソイルを敷いていますが、全てソイルを入れてしまうと底部分にカビが発生する為、
+      軽石→鉢底ネット→ソイルの順番に入れていくと通気性が確保できカビ防止になります。
+
+      成体のツノガエルは足の力が強く、低床に植えた植物等は簡単に掘り返されてしまいます。
+      対策として、コルクボードに苔を活着させ背面に立てかけるようにしました。
+      また水草を活着させた流木も設置し、下部分のレイアウトも補いました。
+      掃除の際はコルクボードなどを取り除きケージを水洗いできるので、メンテナンス性も両立できています。
+
+      【備考】
+      今回のレイアウトでは低床に専用のフロッグソイルを使用しましたが、コストを抑えたい場合、
+      園芸用の赤玉土でも代用可能です。
     TEXT
   },
   {
-    title: "コッパ",
-    category_path: ["両生類", "カエル", "地上棲"],
-    image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/coppa/coppa1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/coppa/coppa2.jpg"
-    ],
-    description: <<~TEXT
-      【種類】クランウェルツノガエル
-      【品種】ブラウン
-      【コメント】2020年12月に家に来た
-    TEXT
-  },
-  {
-    title: "レオパンヌ",
+    title: "ヒョウモントカゲモドキのレイアウト例",
     category_path: ["爬虫類", "ヤモリ", "地上棲"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/leopannu1.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/ferun/leopa1.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/ferun/leopa2.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/ferun/leopa3.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/ferun/leopa4.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/ferun/leopa5.jpg"
     ],
     description: <<~TEXT
-      【種類】ヒョウモントカゲモドキ
-      【品種】マックスノー
-      【コメント】2021年4月に家に来た
+      【種類】ヒョウモントカゲモドキ(ハイポタンジェリン)
+
+      【使用アイテム】
+      グラステラリウム3030、赤玉土、流木、フェイクグリーン(エアープランツ、多肉植物)、
+      シェルター、小石
+
+      【ポイント】
+      本種の生息地である岩場の多い乾燥地帯を再現したレイアウトになります。
+      流木を斜め〜中央に立てるように置く事で立体感を出し、
+      エアープランツを適当な間隔で配置する事で実際にありそうな生息環境を意識しました。
+
+      また野生個体は岩の隙間や穴で過ごす為、流木とシェルターが一体になるように配置し、
+      シェルターの人工物感を減らすようにしました。
+      底面には多肉植物、小石を置き、より自然な環境に近づけてみました。
+
+      【備考】
+      小石はアクアリウムなどで使用される安価なもので大丈夫です。
+      背面はグラステラリウムシリーズの付属品である発泡スチロールのバックボードです。
+      今回のレイアウトに合っていると思い使用していますが、バックスクリーンは自由に変更できます。
+      シェルターはエキゾテラのレプタイルロックを使用しています。
     TEXT
   },
   {
-    title: "イモリーヌ",
+    title: "シリケンイモリのレイアウト例",
     category_path: ["両生類", "イモリ・サンショウウオ"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/imorienu1.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/coppa/siriken1.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/coppa/siriken2.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/coppa/siriken3.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/coppa/siriken4.jpg"
     ],
     description: <<~TEXT
-      【種類】アカハライモリ
-      【品種】特になし
-      【コメント】2023年9月に家に来た
+      【種類】シリケンイモリ
+
+      【使用アイテム】
+      ヒュドラ3120、ソイル、コケ(ホソバオキナゴケ)、水入れ、流木、シェルター、鉢底ネット、照明(アクアリウム用)
+
+      【ポイント】
+      シリケンイモリのレイアウトになります。
+      本種は陸棲の傾向があり、それを活かした苔リウム仕様にしました。
+      苔は比較的丈夫で育成しやすいホソバオキナゴケを使用しました。
+      ソイルは苔を植え込むことを考え高低差をつけ、平坦にならず奥行きが出るように敷いています。
+
+      日々の手入れについては、苔が乾燥し過ぎてしまわないように1日2回ほど霧吹きをする必要があります。
+      その際、水が底に溜まってきてしまいカビが生えてしまう恐れがあります。
+      そこで画像にあるように、イモリの水入れを置く場所にピッタリ収まるように丸い空間を作りました。
+      この空間を用意することで、水交換時に底に水が溜まっていたら、そこから排水しやすいように設計しています。
+
+      【備考】
+      ケージはグラステラリウム等でも可能ですが、通気性が高く乾燥しやすい為、今回はこちらを使用しました。
     TEXT
   },
   {
-    title: "ゴマりん",
-    category_path: ["小動物", "ハムスター"],
+    title: "パンサーカメレオンのレイアウト例",
+    category_path: ["爬虫類", "トカゲ", "樹上棲"],
     image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/gomarin.jpg"
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/nico/chameleon.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/nico/chameleon2.jpg",
+      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/nico/chameleon3.jpg"
     ],
     description: <<~TEXT
-      【種類】ゴールデンハムスター
-      【品種】ダルメシアン
-      【コメント】2024年3月に家に来た
-    TEXT
-  },
-  {
-    title: "フェルン",
-    category_path: ["爬虫類", "ヤモリ", "地上棲"],
-    image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/ferun/ferun1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/ferun/ferun2.jpg"
-    ],
-    description: <<~TEXT
-      【種類】ヒョウモントカゲモドキ
-      【品種】インフェルノ
-      【コメント】2024年10月に家に来た
-    TEXT
-  },
-  {
-    title: "ポチャコ",
-    category_path: ["両生類", "カエル", "地上棲"],
-    image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/pochaco/pochaco1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/pochaco/pochaco2.jpg"
-    ],
-    description: <<~TEXT
-      【種類】チャコガエル
-      【品種】特になし
-      【コメント】2024年10月に家に来た
-    TEXT
-  },
-  {
-    title: "ニコ",
-    category_path: ["爬虫類", "ヤモリ", "樹上棲"],
-    image_urls: [
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/nico/nico1.jpg",
-      "https://terra-space.s3.ap-southeast-1.amazonaws.com/portfolio/nico/nico2.jpg"
-    ],
-    description: <<~TEXT
-      【種類】グランディスヒルヤモリ
-      【品種】特になし
-      【コメント】2024年11月に家に来た
+      【種類】パンサーカメレオン
+
+      【使用アイテム】
+      レプティブリーズLED DELUXE、枝流木、フェイクグリーン、バークチップ、紫外線ライト
+
+      【ポイント】
+      樹上棲である本種に向いたレイアウトになります。
+      主な使用アイテムは細かく枝分かれした枝流木とフェイクグリーンなので、
+      レイアウトを初めて組む方でも組みやすいシンプルな構成となっています。
+
+      【備考】
+      今回は人工のポトスを使用しましたが、アイビーなどつる性植物であれば追加しやすいと思います。
     TEXT
   }
 ]
